@@ -1,0 +1,8 @@
+server:
+  port: 20011
+  servlet:
+    context-path: /test-rollbook-api
+
+variable:
+  server:
+    name: server_test

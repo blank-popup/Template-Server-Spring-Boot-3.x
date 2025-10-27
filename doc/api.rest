@@ -1,0 +1,195 @@
+# @host = http://localhost:20010/rollbook-api/v1
+# @host = http://localhost:20011/test-rollbook-api/v1
+@host = http://localhost:20012/testauth-rollbook-api/v1
+
+
+### Sign Up
+POST {{host}}/user/signup HTTP/1.1
+content-type: application/json
+
+{
+    "username": "user05",
+    "password": "user05",
+    "tag": null,
+    "name": "user05",
+    "email": "",
+    "phone": "",
+    "roles": ["ROLE_USER", "ROLE_11"]
+}
+
+
+### Sign In
+# @name signIn
+POST {{host}}/user/signin HTTP/1.1
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+
+### Set Json Web Token from Sign In
+@token = {{signIn.response.body.data.token}}
+
+
+### Register Role
+# POST {{host}}/admin/role/{roleName} HTTP/1.1
+POST {{host}}/admin/role/ROLE_NAME HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Remove Role
+# DELETE {{host}}/admin/role/{roleId} HTTP/1.1
+DELETE {{host}}/admin/role/7 HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Add role to endpoint
+# POST {{host}}/admin/security/endpoint/{endpointId}/role/{roleId}
+POST {{host}}/admin/security/endpoint/18/role/1
+Authorization: Bearer {{token}}
+
+
+### Remove role from endpoint
+# DELETE {{host}}/admin/security/endpoint/{endpointId}/role/{roleId}
+DELETE {{host}}/admin/security/endpoint/11/role/2
+Authorization: Bearer {{token}}
+
+
+### Add role to user
+# POST {{host}}/admin/security/user/{userId}/role/{roleId}
+POST {{host}}/admin/security/user/11/role/2
+Authorization: Bearer {{token}}
+
+
+### Remove role from user
+# DELETE {{host}}/admin/security/user/{userId}/role/{roleId}
+DELETE {{host}}/admin/security/user/11/role/2
+Authorization: Bearer {{token}}
+
+
+### Scan endpoint
+POST {{host}}/admin/endpoint/scan
+Authorization: Bearer {{token}}
+
+
+### Refresh endpoint
+POST {{host}}/admin/endpoint/refresh
+Authorization: Bearer {{token}}
+
+
+### Enable or Disable Logging Parameter
+POST {{host}}/admin/logging/aop?requestOnOff=on&responseOnOff=on&databaseOnOff=on HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Get Logging Parameter
+GET {{host}}/admin/logging/aop HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Set Level of Logger
+POST {{host}}/admin/logging/level/org.duckdns.ahamike?level=debug HTTP/1.1
+content-type: application/json
+
+
+### Get Level of Logger
+GET {{host}}/admin/logging/level/org.hibernate.SQL HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Set Levels of Logger
+POST {{host}}/admin/logging/levels HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+[
+    {
+        "loggerName": "org.apache.catalina.startup.DigesterFactory",
+        "level": "ERROR"
+    },
+    {
+        "loggerName": "org.apache.catalina.util.LifecycleBase",
+        "level": "ERROR"
+    },
+    {
+        "loggerName": "org.apache.coyote.http11.Http11NioProtocol",
+        "level": "WARN"
+    },
+    {
+        "loggerName": "org.apache.sshd.common.util.SecurityUtils",
+        "level": "WARN"
+    },
+    {
+        "loggerName": "org.apache.tomcat.util.net.NioSelectorPool",
+        "level": "WARN"
+    },
+    {
+        "loggerName": "org.eclipse.jetty.util.component.AbstractLifeCycle",
+        "level": "ERROR"
+    },
+    {
+        "loggerName": "org.hibernate.validator.internal.util.Version",
+        "level": "WARN"
+    },
+    {
+        "loggerName": "org.springframework.boot.actuate.endpoint.jmx",
+        "level": "WARN"
+    },
+    {
+        "loggerName": "org.springframework",
+        "level": "INFO"
+    },
+    {
+        "loggerName": "org.duckdns.ahamike",
+        "level": "DEBUG"
+    },
+    {
+        "loggerName": "org.hibernate.SQL",
+        "level": "DEBUG"
+    },
+    {
+        "loggerName": "com.zaxxer.hikari",
+        "level": "INFO"
+    },
+    {
+        "loggerName": "org.hibernate.ype.descriptor.sql",
+        "level": "TRACE"
+    },
+    {
+        "loggerName": "org.hibernate.orm.jdbc.bind",
+        "level": "TRACE"
+    }
+]
+
+
+### Get Levels of Logger
+GET {{host}}/admin/logging/levels HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Get User
+# GET {{host}}/user HTTP/1.1
+GET {{host}}/admin/user?username=un10&name=nm10&tag=0010 HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+## Register Terminal
+# POST {{host}}/terminal/{terminalName} HTTP/1.1
+POST {{host}}/terminal/terminal03 HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Register Attendance
+POST {{host}}/attendance HTTP/1.1
+content-type: application/json
+
+{
+    "tag": "0003",
+    "terminal": "t2"
+}
+
+
+### Get record of Attendance
+GET {{host}}/attendance?idUser=11&from=2025-07-04&to=2025-07-23 HTTP/1.1

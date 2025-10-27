@@ -1,0 +1,8 @@
+server:
+  port: 20010
+  servlet:
+    context-path: /rollbook-api
+
+variable:
+  server:
+    name: server_service

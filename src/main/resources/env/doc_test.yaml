@@ -1,0 +1,7 @@
+springdoc:
+  swagger-ui:
+    url: /openapi3.json
+
+variable:
+  doc:
+    name: doc_test

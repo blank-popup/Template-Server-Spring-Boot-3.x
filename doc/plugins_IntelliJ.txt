@@ -1,0 +1,16 @@
+idea64.exe installPlugins com.github.alexeylisyutenko.spring-boot-assistant
+idea64.exe installPlugins Lombok Plugin
+idea64.exe installPlugins net.ashald.envfile
+idea64.exe installPlugins DBN
+idea64.exe installPlugins com.intellij.restClient
+idea64.exe installPlugins com.haulmont.jpab
+idea64.exe installPlugins zielu.gittoolbox
+
+Lombok
+Spring Boot Assistant
+EnvFile
+Database Navigator
+Apidog Fast Request
+JPA Buddy
+GitToolBox
+

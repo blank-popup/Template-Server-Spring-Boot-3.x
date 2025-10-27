@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: ${ROLLBOOK_URL_DB0:jdbc:mariadb://localhost:3306/db_project}
+    username: ${ROLLBOOK_USERNAME_DB0:username}
+    password: ${ROLLBOOK_PASSWORD_DB0:password}
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      idle-timeout: 600000
+      max-lifetime: 27000000
+      keepalive-time: 300000
+      connection-timeout: 30000
+  jpa:
+    defer-datasource-initialization: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  # sql:
+  #   init:
+  #     mode: always
+  #     data-locations: classpath:/data.sql
+  data:
+    redis:
+      host: ${ROLLBOOK_URL_REDIS0:localhost}
+      port: ${ROLLBOOK_PORT_REDIS0:6379}
+      password: ${ROLLBOOK_PASSWORD_REDIS0:}
+
+      key_delimiter: ":"
+      group0_user: USER
+      group0_apikey: APIKEY
+
+variable:
+  db:
+    name: db_service

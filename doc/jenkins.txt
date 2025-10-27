@@ -1,0 +1,93 @@
+[introduction]
+Using Jenkins on local PC Windows
+To do in Jenkins
+    Build project on local
+    Copy .jar file to server
+    Restart .jar on server
+
+[Credentials]
+url: ~ /manage/credentials/
+System > Global credentials > Add Credentials
+Kind: SSH Username with private key
+Scope: Global (Jenkins, nodes, items, all child items, etc)
+ID: unique key for separation of other credential, use its value at credentialsId, for exampe key-alex-ssh
+Username: Remote username, use username to connect to server, for example alex
+Private key
+Check Enter directly
+Copy & Paste content of id_rsa(file of private key)
+
+[pipeline script]
+pipeline {
+    agent any
+
+    environment {
+        DIR_PROJECT = "D:/path/to/project"                  // root directory of project in Windows
+        FILENAME_JAR = "project-name-0.0.1-SNAPSHOT.jar"    // result file name after build, for exampel project-name-0.0.1-SNAPSHOT.jar"
+        FILENAME_BASH = "startup.sh"
+        PATH_SERVER = "/path/to/project"                    // directory of .jar file in server
+        IP_SERVER = "www.example.com"                       // ip of server
+        PORT_SSH = "22"                                     // port of ssh
+    }
+
+    stages {
+
+        stage('Build') {
+            steps {
+                echo "Building Spring Boot app..."
+                dir("${env.DIR_PROJECT}") {
+                    bat 'gradlew.bat clean build -x test'
+                }
+            }
+        }
+
+        stage('Deploy on Server') {
+            steps {
+                echo "Deploying to server ..."
+
+                // Inject credentials into environment
+                withCredentials([sshUserPrivateKey(
+                    credentialsId: 'key-alex-ssh',          // Match Jenkins ID of credential
+                    keyFileVariable: 'SSH_KEY',             // Temp file path, need not alter value
+                    usernameVariable: 'SSH_USER'            // Remote username, need not alter value
+                )]) {
+
+                    bat """
+                        echo Copying JAR file...
+                        scp -P %PORT_SSH% -i %SSH_KEY% -o StrictHostKeyChecking=no %DIR_PROJECT%\\build\\libs\\%FILENAME_JAR% %SSH_USER%@%IP_SERVER%:%PATH_SERVER%/
+                    """
+                }
+            }
+        }
+
+        stage('Killing and Restarting process on Server') {
+            steps {
+                echo "Running bash ..."
+
+                // Inject credentials into environment
+                withCredentials([sshUserPrivateKey(
+                    credentialsId: 'key-alex-ssh',          // Match Jenkins ID of credential
+                    keyFileVariable: 'SSH_KEY',             // Temp file path, need not alter value
+                    usernameVariable: 'SSH_USER'            // Remote username, need not alter value
+                )]) {
+
+                    bat """
+                        echo Restarting app...
+                        ssh -p %PORT_SSH% -i %SSH_KEY% -o StrictHostKeyChecking=no %SSH_USER%@%IP_SERVER% "bash %PATH_SERVER%/%FILENAME_BASH% service"
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful!"
+        }
+        failure {
+            echo "Deployment failed."
+        }
+    }
+}
+
+[startup.sh]
+Copy file startup.sh to %PATH_SERVER%

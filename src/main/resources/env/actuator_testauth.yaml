@@ -1,0 +1,11 @@
+management:
+  # http://localhost:20019/testauth-rollbook-manage
+  server:
+    port: 20019
+  endpoints:
+    web:
+      base-path: "/testauth-rollbook-manage"
+
+variable:
+  actuator:
+    name: actuator_testauth

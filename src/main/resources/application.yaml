@@ -1,0 +1,44 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+    import:
+      - classpath:/env/server_test.yaml
+      - classpath:/env/auth_test.yaml
+      - classpath:/env/db_test.yaml
+      - classpath:/env/log_test.yaml
+      - classpath:/env/doc_test.yaml
+      - classpath:/env/file_test.yaml
+      - classpath:/env/actuator_test.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testauth
+    import:
+      - classpath:/env/server_testauth.yaml
+      - classpath:/env/auth_testauth.yaml
+      - classpath:/env/db_testauth.yaml
+      - classpath:/env/log_testauth.yaml
+      - classpath:/env/doc_testauth.yaml
+      - classpath:/env/file_testauth.yaml
+      - classpath:/env/actuator_testauth.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: service
+    import:
+      - classpath:/env/server_service.yaml
+      - classpath:/env/auth_service.yaml
+      - classpath:/env/db_service.yaml
+      - classpath:/env/log_service.yaml
+      - classpath:/env/doc_service.yaml
+      - classpath:/env/file_service.yaml
+      - classpath:/env/actuator_service.yaml
+
+---

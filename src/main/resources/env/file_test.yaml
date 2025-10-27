@@ -1,0 +1,7 @@
+directory:
+  attatchment:
+    root: ${TEST_ROLLBOOK_DIRECTORY_FILE_ROOT:file_test}
+
+variable:
+  file:
+    name: file_test

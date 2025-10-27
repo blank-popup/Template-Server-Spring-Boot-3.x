@@ -1,0 +1,16 @@
+auth:
+  jwt:
+    key: ImPossible$$ImPossible$$ImPossible$$ImPossible$$ImPossible$$ImPossible$$
+    expiration-access: 3600000
+    expiration-refresh: 86400000
+  apikey:
+    key: ImPossible$$$$$ImPossible$$$$$
+    iv: ImPossible$$$$$
+    delimiter: ", "
+  permitAll:
+    signUp: /v1/user/signup
+    signIn: /v1/user/signin
+
+variable:
+  auth:
+    name: auth_test

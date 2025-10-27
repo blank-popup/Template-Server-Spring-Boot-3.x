@@ -1,0 +1,9 @@
+logging:
+  config: classpath:logback/logback-test.xml
+  limit:
+    maxRequestBodySize: 1800
+    maxResponseBodySize: 1800
+
+variable:
+  log:
+    name: log_testauth

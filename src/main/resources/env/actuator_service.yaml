@@ -1,0 +1,11 @@
+management:
+  # http://localhost:20017/rollbook-manage
+  server:
+    port: 20017
+  endpoints:
+    web:
+      base-path: "/rollbook-manage"
+
+variable:
+  actuator:
+    name: actuator_service

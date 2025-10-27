@@ -1,0 +1,7 @@
+directory:
+  attatchment:
+    root: ${ROLLBOOK_DIRECTORY_FILE_ROOT:file_service}
+
+variable:
+  file:
+    name: file_service

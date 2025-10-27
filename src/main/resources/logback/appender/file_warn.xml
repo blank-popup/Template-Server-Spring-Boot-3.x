@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<included>
+    <appender name="FILE_WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILEPATH_WARN}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILEPATH_WARN_ROLLING}</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>${PATTERN_FILE}</pattern>
+            <charset>${CHARSET_FILE}</charset>
+        </encoder>
+    </appender>
+</included>

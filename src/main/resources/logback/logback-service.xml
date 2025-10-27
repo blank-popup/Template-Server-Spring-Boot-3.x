@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="logback/appender/base_service.xml" />
+    <include resource="logback/appender/console.xml" />
+    <include resource="logback/appender/file.xml" />
+    <include resource="logback/appender/file_warn.xml" />
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE_WARN" />
+    </root>
+</configuration>

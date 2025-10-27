@@ -1,0 +1,9 @@
+logging:
+  config: classpath:logback/logback-service.xml
+  limit:
+    maxRequestBodySize: 1800
+    maxResponseBodySize: 1800
+
+variable:
+  log:
+    name: log_service

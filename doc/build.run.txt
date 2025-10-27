@@ -1,0 +1,4 @@
+gradlew.bat clean build
+
+cd build\libs
+set "ROLLBOOK_URL_DB=jdbc:mariadb://localhost:3306/db_project" && set "ROLLBOOK_USERNAME_DB=username" && set "ROLLBOOK_PASSWORD_DB=password" && java -jar -Dspring.profiles.active=test rollbook-0.0.1-SNAPSHOT.jar
