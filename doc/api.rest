@@ -91,7 +91,7 @@ Authorization: Bearer {{token}}
 
 ### Set Level of Logger
 POST {{host}}/admin/logging/level/org.duckdns.ahamike?level=debug HTTP/1.1
-content-type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Get Level of Logger
