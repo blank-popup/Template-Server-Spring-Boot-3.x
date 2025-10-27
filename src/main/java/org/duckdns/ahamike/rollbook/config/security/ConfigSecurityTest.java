@@ -68,10 +68,6 @@ public class ConfigSecurityTest {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/**").permitAll()
                 )
-                // .exceptionHandling(ex -> ex
-                //         .authenticationEntryPoint(new AuthenticationEntryPointCustom())
-                //         .accessDeniedHandler(new AccessDeniedHandlerCustom())
-                // )
                 .addFilterBefore(
                         new AuthenticationFilterCustom(providerJwt, providerApiKey),
                         UsernamePasswordAuthenticationFilter.class
