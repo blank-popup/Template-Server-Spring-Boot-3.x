@@ -5,7 +5,7 @@
 
 ### Sign Up
 POST {{host}}/user/signup HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
     "username": "user05",
@@ -21,7 +21,7 @@ content-type: application/json
 ### Sign In
 # @name signIn
 POST {{host}}/user/signin HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
     "username": "admin",
@@ -101,7 +101,7 @@ Authorization: Bearer {{token}}
 
 ### Set Levels of Logger
 POST {{host}}/admin/logging/levels HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 Authorization: Bearer {{token}}
 
 [
@@ -183,7 +183,7 @@ Authorization: Bearer {{token}}
 
 ### Register Attendance
 POST {{host}}/attendance HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
     "tag": "0003",
