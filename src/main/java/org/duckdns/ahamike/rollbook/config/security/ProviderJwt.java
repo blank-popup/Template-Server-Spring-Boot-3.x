@@ -32,7 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Component
-// @Transactional
 @Slf4j
 public class ProviderJwt implements InitializingBean {
     @Value("${auth.jwt.key}")
@@ -132,18 +131,4 @@ public class ProviderJwt implements InitializingBean {
 
         return null;
     }
-
-    // public String getUsername() {
-    //     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-    //     String valueAuthorization = request.getHeader("Authorization");
-    //     String jwt = valueAuthorization.substring(7);
-    //     Jws<Claims> claims = Jwts
-    //             .parser()
-    //             .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
-    //             .build()
-    //             .parseSignedClaims(jwt);
-    //     String username = claims.getPayload().getSubject();
-
-    //     return username;
-    // }
 }
