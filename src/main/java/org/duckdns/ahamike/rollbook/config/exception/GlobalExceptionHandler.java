@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.logging.LogParameter;
 import org.duckdns.ahamike.rollbook.config.logging.LogUtil;
+import org.duckdns.ahamike.rollbook.config.logging.InfoRequestParam;
 import org.duckdns.ahamike.rollbook.config.logging.ServiceApiHistory;
 import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceLoggingConfig;
 import org.duckdns.ahamike.rollbook.process.GlobalException;
@@ -206,17 +207,19 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
             return;
         }
 
-        Object requestObjectBody = HOLDER_BODY.get();
+        HttpServletRequest request = attributes.getRequest();
+        Object infoObject = request.getAttribute("InfoRequestParam");
+        InfoRequestParam infoRequestParam = (InfoRequestParam) infoObject;
+
         LogParameter logParameter = LogUtil.buildLogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
             uriSignUp, uriSignIn,
-            maxRequestBodySize, maxResponseBodySize,
-            requestObjectBody, null
+            maxRequestBodySize, maxResponseBodySize
         );
+        Object requestObjectBody = HOLDER_BODY.get();
+        infoRequestParam.setRequestBody(requestObjectBody);
 
-        HttpServletRequest request = attributes.getRequest();
-
-        logParameter = LogUtil.setLogPreParameter(logParameter, request);
+        logParameter = LogUtil.setLogPreParameter(logParameter, request, infoRequestParam);
         Integer httpStatusValue = response.getStatusCode().value();
         logParameter = LogUtil.setLogPostParameter(logParameter, request, response, httpStatusValue);
 
@@ -225,6 +228,10 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
                 logParameter.getUsername(),
                 logParameter.getMethod(),
                 logParameter.getUri(),
+                logParameter.getPathVariable(),
+                logParameter.getRequestParam(),
+                logParameter.getRequestPartFile(),
+                logParameter.getRequestPartParam(),
                 logParameter.getIp(),
                 logParameter.getUserAgent(),
                 logParameter.getHttpStatusValue(),
@@ -235,12 +242,35 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
             );
         }
         if (serviceLoggingConfig.isEnabledRequest() == true) {
-            log.debug("\n[Exception] username: {}\n[Exception] URI: [{}] {}\n[Exception] IP: {}\n[Exception] userAgent: {}\n[Exception] body: {}",
-            logParameter.getUsername(), logParameter.getMethod(), logParameter.getUri(), logParameter.getIp(), logParameter.getUserAgent(), logParameter.getRequestBody());
+            log.info("\n[Exception] username: {}"
+                    + "\n[Exception] URI: [{}] {}"
+                    + "\n[Exception] PathVariable: {}"
+                    + "\n[Exception] RequestParam: {}"
+                    + "\n[Exception] RequestPart File: {}"
+                    + "\n[Exception] RequestPart Param: {}"
+                    + "\n[Exception] RequestBody: {}"
+                    + "\n[Exception] IP: {}"
+                    + "\n[Exception] userAgent: {}",
+                logParameter.getUsername(),
+                logParameter.getMethod(),
+                logParameter.getUri(),
+                logParameter.getPathVariable(),
+                logParameter.getRequestParam(),
+                logParameter.getRequestPartFile(),
+                logParameter.getRequestPartParam(),
+                logParameter.getRequestBody(),
+                logParameter.getIp(),
+                logParameter.getUserAgent()
+            );
         }
         if (serviceLoggingConfig.isEnabledException() == true) {
-            log.debug("\n[Exception] httpStatusValue: {}\n[Exception] duration: {}\n[Exception] body: {}",
-            logParameter.getHttpStatusValue(), logParameter.getDuration(), logParameter.getResponseBody());
+            log.info("\n[Exception] HttpStatusValue: {}"
+                    + "\n[Exception] Duration: {}"
+                    + "\n[Exception] ResponseBody: {}",
+                logParameter.getHttpStatusValue(),
+                logParameter.getDuration(),
+                logParameter.getResponseBody()
+            );
         }
     }
 

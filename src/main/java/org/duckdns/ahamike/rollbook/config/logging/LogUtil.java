@@ -12,7 +12,6 @@ import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.duckdns.ahamike.rollbook.util.json.JsonUtil;
 import org.duckdns.ahamike.rollbook.util.str.Str;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,18 +24,17 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LogUtil {
-    public static LogParameter buildLogParameter(ServiceApiHistory serviceApiHistory, ServiceLoggingConfig serviceLoggingConfig, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize, Object requestObjectBody, ResponseEntity<?> response) { 
+    public static LogParameter buildLogParameter(ServiceApiHistory serviceApiHistory, ServiceLoggingConfig serviceLoggingConfig, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize) { 
         LogParameter logParameter = new LogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
             uriSignUp, uriSignIn,
-            maxRequestBodySize, maxResponseBodySize,
-            requestObjectBody, response
+            maxRequestBodySize, maxResponseBodySize
         );
 
         return logParameter;
     }
     
-    public static LogParameter setLogPreParameter(LogParameter logParameter, HttpServletRequest request) {
+    public static LogParameter setLogPreParameter(LogParameter logParameter, HttpServletRequest request, InfoRequestParam param) {
         String method = request.getMethod();
         String contextPath = request.getContextPath();
         String uri = request.getRequestURI();
@@ -45,6 +43,13 @@ public class LogUtil {
         String uriWithoutContextPathWithQuery = (query == null) ? uriWithoutContextPath : (uriWithoutContextPath + "?" + query);
         logParameter.setMethod(method);
         logParameter.setUri(uriWithoutContextPathWithQuery);
+
+        logParameter.setPathVariable(param.getPathVariables().toString());
+        logParameter.setRequestParam(Str.map2String(param.getRequestParams()));
+        logParameter.setRequestPartFile(param.getRequestPartsFile().toString());
+        logParameter.setRequestPartParam(Str.map2String(param.getRequestPartsParam()));
+
+        logParameter.setRequestObjectBody(param.getRequestBody());
 
         String username = resolveUsername(logParameter);
         logParameter.setUsername(username);

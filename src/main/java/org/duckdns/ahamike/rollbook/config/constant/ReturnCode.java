@@ -24,6 +24,7 @@ public enum ReturnCode {
     EMPTY_ARRAY("EMPTY_ARRAY", "Empty array", HttpStatus.BAD_REQUEST),
     EMPTY_OBJECT("EMPTY_OBJECT", "Empty object", HttpStatus.BAD_REQUEST),
     UNAVAILABLE_MIME_TYPE("UNAVAILABLE_MIME_TYPE", "Unavailable mime type", HttpStatus.BAD_REQUEST),
+    FILE_IO_ERROR("FILE_IO_ERROR", "File input/output error", HttpStatus.BAD_REQUEST),
 
     USERNAME_NOT_FOUND("USERNAME_NOT_FOUND", "Username not found", HttpStatus.UNAUTHORIZED),
     INSUFFICIENT_AUTHENTICATION("INSUFFICIENT_AUTHENTICATION", "Insufficient authentication", HttpStatus.UNAUTHORIZED),

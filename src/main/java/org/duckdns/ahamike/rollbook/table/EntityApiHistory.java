@@ -34,6 +34,18 @@ public class EntityApiHistory {
     @Column(name = "uri")
     private String uri;
 
+    @Column(name = "path_variable")
+    private String pathVariable;
+
+    @Column(name = "request_param")
+    private String requestParam;
+
+    @Column(name = "request_part_file")
+    private String requestPartFile;
+
+    @Column(name = "request_part_param")
+    private String requestPartParam;
+
     @Column(name = "ip")
     private String ip;
 
@@ -56,25 +68,36 @@ public class EntityApiHistory {
     @Column(name = "response_body", length = 2000)
     private String responseBody;
 
-    public EntityApiHistory(String username, String method, String uri, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration, String requestBody, String responseBody) {
+    public EntityApiHistory(String username, String method, String uri, String pathVariable, String requestParam, String requestPartFile, String requestPartParam, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration, String requestBody, String responseBody) {
         this.username = username;
         this.method = method;
         this.uri = uri;
+
+        this.pathVariable = pathVariable;
+        this.requestParam = requestParam;
+        this.requestPartFile = requestPartFile;
+        this.requestPartParam = requestPartParam;
+
         this.ip = ip;
         this.userAgent = userAgent;
 
         this.httpStatusValue = httpStatusValue;
         this.createdAt = createdAt;
         this.duration = duration;
+
         this.requestBody = requestBody;
         this.responseBody = responseBody;
     }
 
+    public EntityApiHistory(String username, String method, String uri, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration, String requestBody, String responseBody) {
+        this(username, method, uri, null, null, null, null, ip, userAgent, httpStatusValue, createdAt, duration, requestBody, responseBody);
+    }
+
     public EntityApiHistory(String username, String method, String uri, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration) {
-        this(username, method, uri, ip, userAgent, httpStatusValue, createdAt, duration, null, null);
+        this(username, method, uri, null, null, null, null, ip, userAgent, httpStatusValue, createdAt, duration, null, null);
     }
 
     public EntityApiHistory(String username, String method, String uri, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt) {
-        this(username, method, uri, ip, userAgent, httpStatusValue, createdAt, null, null, null);
+        this(username, method, uri, null, null, null, null, ip, userAgent, httpStatusValue, createdAt, null, null, null);
     }
 }

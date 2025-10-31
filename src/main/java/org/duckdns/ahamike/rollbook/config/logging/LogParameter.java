@@ -28,6 +28,10 @@ public class LogParameter {
     private String username;
     private String method;
     private String uri;
+    private String pathVariable;
+    private String requestParam;
+    private String requestPartFile;
+    private String requestPartParam;
     private String ip;
     private String userAgent;
     private String requestBody;

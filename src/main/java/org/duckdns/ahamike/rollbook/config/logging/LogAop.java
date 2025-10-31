@@ -47,25 +47,46 @@ public class LogAop {
             return null;
         }
 
-        Object requestObjectBody = LogUtil.getRequestObjectBody(joinPoint);
+        HttpServletRequest request = attributes.getRequest();
+        Object infoObject = request.getAttribute("InfoRequestParam");
+        InfoRequestParam infoRequestParam = (InfoRequestParam) infoObject;
+
         LogParameter logParameter = LogUtil.buildLogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
             uriSignUp, uriSignIn,
-            maxRequestBodySize, maxResponseBodySize,
-            requestObjectBody, null
+            maxRequestBodySize, maxResponseBodySize
         );
+        Object requestObjectBody = LogUtil.getRequestObjectBody(joinPoint);
+        infoRequestParam.setRequestBody(requestObjectBody);
 
-        HttpServletRequest request = attributes.getRequest();
-
-        logParameter = LogUtil.setLogPreParameter(logParameter, request);
+        logParameter = LogUtil.setLogPreParameter(logParameter, request, infoRequestParam);
 
         if (serviceLoggingConfig.isEnabledRequest() == true) {
-            log.debug("\n[Request] username: {}\n[Request] URI: [{}] {}\n[Request] IP: {}\n[Request] userAgent: {}\n[Request] body: {}",
-            logParameter.getUsername(), logParameter.getMethod(), logParameter.getUri(), logParameter.getIp(), logParameter.getUserAgent(), logParameter.getRequestBody());
+            log.info("\n[Request] username: {}"
+                    + "\n[Request] URI: [{}] {}"
+                    + "\n[Request] PathVariable: {}"
+                    + "\n[Request] RequestParam: {}"
+                    + "\n[Request] RequestPart File: {}"
+                    + "\n[Request] RequestPart Param: {}"
+                    + "\n[Request] RequestBody: {}"
+                    + "\n[Request] IP: {}"
+                    + "\n[Request] userAgent: {}",
+                logParameter.getUsername(),
+                logParameter.getMethod(),
+                logParameter.getUri(),
+                logParameter.getPathVariable(),
+                logParameter.getRequestParam(),
+                logParameter.getRequestPartFile(),
+                logParameter.getRequestPartParam(),
+                logParameter.getRequestBody(),
+                logParameter.getIp(),
+                logParameter.getUserAgent()
+            );
         }
 
         try {
             Object result = joinPoint.proceed();
+
             logParameter = LogUtil.setLogPostParameter(logParameter, request, result, HttpServletResponse.SC_OK);
 
             if (serviceLoggingConfig.isEnabledDatabase() == true) {
@@ -73,6 +94,10 @@ public class LogAop {
                     logParameter.getUsername(),
                     logParameter.getMethod(),
                     logParameter.getUri(),
+                    logParameter.getPathVariable(),
+                    logParameter.getRequestParam(),
+                    logParameter.getRequestPartFile(),
+                    logParameter.getRequestPartParam(),
                     logParameter.getIp(),
                     logParameter.getUserAgent(),
                     logParameter.getHttpStatusValue(),
@@ -83,8 +108,13 @@ public class LogAop {
                 );
             }
             if (serviceLoggingConfig.isEnabledResponse() == true) {
-                log.debug("\n[Response] httpStatusValue: {}\n[Response] duration: {}\n[Response] body: {}",
-                logParameter.getHttpStatusValue(), logParameter.getDuration(), logParameter.getResponseBody());
+                log.info("\n[Response] HttpStatusValue: {}"
+                        + "\n[Response] Duration: {}"
+                        + "\n[Response] ResponseBody: {}",
+                    logParameter.getHttpStatusValue(),
+                    logParameter.getDuration(),
+                    logParameter.getResponseBody()
+                );
             }
 
             return result;
