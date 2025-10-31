@@ -1,5 +1,8 @@
 package org.duckdns.ahamike.rollbook.util.str;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class Str {
     public static String truncate(String str, int maxSize) {
         return (str != null && str.length() > maxSize) ? str.substring(0, maxSize) : str;
@@ -12,5 +15,11 @@ public class Str {
         }
         int maxSizeAdjusted = maxSize - length;
         return (str != null && str.length() > maxSizeAdjusted) ? str.substring(0, maxSizeAdjusted) + (suffix == null ? "" : suffix) : str;
+    }
+
+    public static String map2String(Map<String, String[]> map) {
+        return map.entrySet().stream()
+                .map(entry -> entry.getKey() + "=[" + String.join(", ", entry.getValue()) + "]")
+                .collect(Collectors.joining(", ", "{", "}"));
     }
 }
