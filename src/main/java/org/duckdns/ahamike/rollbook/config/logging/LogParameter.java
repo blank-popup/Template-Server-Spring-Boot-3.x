@@ -2,7 +2,7 @@ package org.duckdns.ahamike.rollbook.config.logging;
 
 import java.time.LocalDateTime;
 
-import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.runtime.ServiceLoggingConfig;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

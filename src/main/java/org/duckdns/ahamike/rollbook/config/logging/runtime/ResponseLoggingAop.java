@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging.setting;
+package org.duckdns.ahamike.rollbook.config.logging.runtime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

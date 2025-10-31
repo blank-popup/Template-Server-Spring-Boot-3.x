@@ -1,6 +1,6 @@
 package org.duckdns.ahamike.rollbook.config;
 
-import org.duckdns.ahamike.rollbook.config.logging.RequestParamInterceptor;
+import org.duckdns.ahamike.rollbook.config.logging.setting.RequestParamInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package org.duckdns.ahamike.rollbook.config;
 
-import org.duckdns.ahamike.rollbook.config.logging.RequestCachingFilter;
-import org.duckdns.ahamike.rollbook.config.logging.RequestTimeFilter;
+import org.duckdns.ahamike.rollbook.config.logging.setting.RequestCachingFilter;
+import org.duckdns.ahamike.rollbook.config.logging.setting.RequestTimeFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

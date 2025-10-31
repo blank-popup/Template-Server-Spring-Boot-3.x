@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging.setting;
+package org.duckdns.ahamike.rollbook.config.logging.runtime;
 
 import java.util.ArrayList;
 import java.util.Arrays;

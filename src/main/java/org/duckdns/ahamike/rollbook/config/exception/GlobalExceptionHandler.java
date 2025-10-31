@@ -8,7 +8,7 @@ import org.duckdns.ahamike.rollbook.config.logging.LogParameter;
 import org.duckdns.ahamike.rollbook.config.logging.LogUtil;
 import org.duckdns.ahamike.rollbook.config.logging.InfoRequestParam;
 import org.duckdns.ahamike.rollbook.config.logging.ServiceApiHistory;
-import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.runtime.ServiceLoggingConfig;
 import org.duckdns.ahamike.rollbook.process.GlobalException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
