@@ -2,9 +2,6 @@ package org.duckdns.ahamike.rollbook.config.logging;
 
 import java.io.IOException;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,8 +9,6 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
-@Component
-@Order(Integer.MIN_VALUE)
 public class RequestTimeFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
