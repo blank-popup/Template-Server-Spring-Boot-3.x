@@ -26,9 +26,14 @@ public enum ReturnCode {
     UNAVAILABLE_MIME_TYPE("UNAVAILABLE_MIME_TYPE", "Unavailable mime type", HttpStatus.BAD_REQUEST),
     FILE_IO_ERROR("FILE_IO_ERROR", "File input/output error", HttpStatus.BAD_REQUEST),
 
+    FAIL_TO_SET("FAIL_TO_SET", "Fail to set", HttpStatus.BAD_REQUEST),
+    FAIL_TO_GET("FAIL_TO_GET", "Fail to get", HttpStatus.BAD_REQUEST),
+    FAIL_TO_REMOVE("FAIL_TO_REMOVE", "Fail to remove", HttpStatus.BAD_REQUEST),
+
     USERNAME_NOT_FOUND("USERNAME_NOT_FOUND", "Username not found", HttpStatus.UNAUTHORIZED),
     INSUFFICIENT_AUTHENTICATION("INSUFFICIENT_AUTHENTICATION", "Insufficient authentication", HttpStatus.UNAUTHORIZED),
     ACCESS_DENIED("ACCESS_DENIED", "Access denied", HttpStatus.FORBIDDEN),
+    NOT_SIGNED_IN("NOT_SIGNED_IN", "Not signed in", HttpStatus.BAD_REQUEST),
     // NoResourceFoundException - 404 Not Found
     NOT_FOUND("NOT_FOUND", "Not found", HttpStatus.NOT_FOUND),
     // HttpMessageNotReadableException - 400 Bad Request
