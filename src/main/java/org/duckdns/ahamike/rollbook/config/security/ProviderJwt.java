@@ -102,16 +102,16 @@ public class ProviderJwt implements InitializingBean {
                     .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()
                     .parseSignedClaims(jwt);
-            String ipJwt = (String) claims.getPayload().get("ip");
-            String userAgentJwt = (String) claims.getPayload().get("userAgent");
-            log.debug("Validate Tocken ipRemote : [{}], ipJwt : [{}]", remoteIp, ipJwt);
-            log.debug("Validate Tocken userAgentRemote : [{}], userAgentJwt : [{}]", remoteUserAgent, userAgentJwt);
+            String jwtIp = (String) claims.getPayload().get("ip");
+            String jwtUserAgent = (String) claims.getPayload().get("userAgent");
+            log.debug("Validate Token ipRemote : [{}], ipJwt : [{}]", remoteIp, jwtIp);
+            log.debug("Validate Token userAgentRemote : [{}], userAgentJwt : [{}]", remoteUserAgent, jwtUserAgent);
 
-            if (remoteIp == null || ipJwt == null || (remoteIp.equals(ipJwt) == false)) {
+            if (remoteIp == null || jwtIp == null || (remoteIp.equals(jwtIp) == false)) {
                 log.warn("JWT : Invalid remote IP");
                 return null;
             }
-            if (remoteUserAgent == null || userAgentJwt == null || (remoteUserAgent.equals(userAgentJwt) == false)) {
+            if (remoteUserAgent == null || jwtUserAgent == null || (remoteUserAgent.equals(jwtUserAgent) == false)) {
                 log.warn("JWT : Invalid User-Agent");
                 return null;
             }
