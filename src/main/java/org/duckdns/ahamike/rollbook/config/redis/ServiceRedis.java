@@ -73,8 +73,8 @@ public class ServiceRedis {
         return redisTemplate.opsForValue().get(buildKey(key));
     }
 
-    public void removeValue(String key) {
-        redisTemplate.delete(buildKey(key));
+    public Boolean removeValue(String key) {
+        return redisTemplate.delete(buildKey(key));
     }
 
 
@@ -90,8 +90,8 @@ public class ServiceRedis {
         return redisTemplate.opsForValue().get(buildKey(group0, key));
     }
 
-    public void removeValue(String group0, String key) {
-        redisTemplate.delete(buildKey(group0, key));
+    public Boolean removeValue(String group0, String key) {
+        return redisTemplate.delete(buildKey(group0, key));
     }
 
 
@@ -107,8 +107,8 @@ public class ServiceRedis {
         return redisTemplate.opsForValue().get(buildKey(group0, group1, key));
     }
 
-    public void removeValue(String group0, String group1, String key) {
-        redisTemplate.delete(buildKey(group0, group1, key));
+    public Boolean removeValue(String group0, String group1, String key) {
+        return redisTemplate.delete(buildKey(group0, group1, key));
     }
 
 
@@ -124,8 +124,8 @@ public class ServiceRedis {
         return redisTemplate.opsForValue().get(buildKey(group0, group1, group2, key));
     }
 
-    public void removeValue(String group0, String group1, String group2, String key) {
-        redisTemplate.delete(buildKey(group0, group1, group2, key));
+    public Boolean removeValue(String group0, String group1, String group2, String key) {
+        return redisTemplate.delete(buildKey(group0, group1, group2, key));
     }
 
 
@@ -141,8 +141,8 @@ public class ServiceRedis {
         return redisTemplate.opsForValue().get(key);
     }
 
-    public void removeOValue(String key) {
-        redisTemplate.delete(key);
+    public Boolean removeOValue(String key) {
+        return redisTemplate.delete(key);
     }
 
 
