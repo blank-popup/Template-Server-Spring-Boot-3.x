@@ -17,10 +17,13 @@ import org.duckdns.ahamike.rollbook.table.EntityUser;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.duckdns.ahamike.rollbook.util.validator.NullString;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -138,6 +141,40 @@ public class ServiceUser {
                 code.getHttpStatus(),
                 response
         );
+    }
+
+    public GlobalResponse<ResponseSignIn> signOut(HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = null;
+        if (auth != null && auth.isAuthenticated() == true && "anonymousUser".equals(auth.getPrincipal()) == false) {
+            username = auth.getName();
+        }
+
+        String authorization = request.getHeader("Authorization");
+        String token = null;
+        if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")) {
+            token = authorization.substring(7);
+        }
+
+        Object user = serviceRedis.getValue(group0_user, username, token);
+        if (user == null) {
+            throw new ExceptionBusiness(ReturnCode.NOT_SIGNED_IN, "User not found in Redis");
+        }
+
+        Boolean removed = serviceRedis.removeValue(group0_user, username, token);
+
+        if (removed == true) {
+            ReturnCode code = ReturnCode.OK;
+            return new GlobalResponse<>(
+                    code.getCode(),
+                    code.getMessage(),
+                    code.getHttpStatus(),
+                    null
+            );
+        }
+        else {
+            throw new ExceptionBusiness(ReturnCode.FAIL_TO_REMOVE, "Fail to remove user");
+        }
     }
 
     public GlobalResponse<List<EntityUser>> getUsers(String username, String name, String tag) {

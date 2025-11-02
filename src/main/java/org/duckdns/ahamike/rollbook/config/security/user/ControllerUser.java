@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +32,14 @@ public class ControllerUser {
     @PostMapping("/user/signin")
     public ResponseEntity<?> signIn(@RequestBody RequestSignIn request) {
         GlobalResponse<?> response = serviceUser.signIn(request);
+        return ResponseEntity
+                .status(response.getHttpStatus())
+                .body(response);
+    }
+
+    @PostMapping("/user/signout")
+    public ResponseEntity<?> signOut(HttpServletRequest request) {
+        GlobalResponse<?> response = serviceUser.signOut(request);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
