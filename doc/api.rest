@@ -33,6 +33,11 @@ Content-Type: application/json
 @token = {{signIn.response.body.data.token}}
 
 
+### Sign Out
+POST {{host}}/user/signout HTTP/1.1
+Authorization: Bearer {{token}}
+
+
 ### Register Role
 # POST {{host}}/admin/role/{roleName} HTTP/1.1
 POST {{host}}/admin/role/ROLE_NAME HTTP/1.1
