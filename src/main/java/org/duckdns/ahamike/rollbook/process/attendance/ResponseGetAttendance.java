@@ -5,21 +5,21 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public interface ResponseGetAttender {
+public interface ResponseGetAttendance {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate getDate();
-    Long getIdUser();
+    Long getUserId();
     String getUsername();
     String getName();
     String getTag();
-    String getTerminal();
+    // String getTerminal();
 
-    Long getIdFirst();
+    Long getFirstId();
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    LocalDateTime getCreatedAtFirst();
-    String getTerminalFirst();
-    Long getIdLast();
+    LocalDateTime getFirstCreatedAt();
+    String getFirstTerminal();
+    Long getLastId();
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-    LocalDateTime getCreatedAtLast();
-    String getTerminalLast();
+    LocalDateTime getLastCreatedAt();
+    String getLastTerminal();
 }

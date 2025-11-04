@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Entity
-@Table(name = "tb_attender")
+@Table(name = "tb_attendance")
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityAttender extends AuditableC {
+public class EntityAttendance extends AuditableC {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class EntityAttender extends AuditableC {
         }
     }
     
-    public EntityAttender(Long userId, Long terminalId, Long tagId) {
+    public EntityAttendance(Long userId, Long terminalId, Long tagId) {
         this.userId = userId;
         this.terminalId = terminalId;
         this.tagId = tagId;
