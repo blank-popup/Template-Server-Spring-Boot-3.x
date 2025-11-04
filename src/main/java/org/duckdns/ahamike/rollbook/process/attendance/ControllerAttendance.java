@@ -31,8 +31,8 @@ public class ControllerAttendance {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAttenders(@RequestParam(name = "idUser", required = false) Long idUser, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) LocalDate from, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) LocalDate to) {
-        GlobalResponse<?> response = serviceAttendance.getAttenders(idUser, from, to);
+    public ResponseEntity<?> getAttenders(@RequestParam(name = "userId", required = false) Long userId, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) LocalDate from, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) LocalDate to) {
+        GlobalResponse<?> response = serviceAttendance.getAttenders(userId, from, to);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

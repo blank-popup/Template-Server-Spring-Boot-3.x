@@ -10,7 +10,7 @@ import org.duckdns.ahamike.rollbook.config.security.user.RepositoryUser;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.duckdns.ahamike.rollbook.process.tag.RepositoryTag;
 import org.duckdns.ahamike.rollbook.process.terminal.RepositoryTerminal;
-import org.duckdns.ahamike.rollbook.table.EntityAttender;
+import org.duckdns.ahamike.rollbook.table.EntityAttendance;
 import org.duckdns.ahamike.rollbook.table.EntityTag;
 import org.duckdns.ahamike.rollbook.table.EntityTerminal;
 import org.duckdns.ahamike.rollbook.table.EntityUser;
@@ -30,7 +30,7 @@ public class ServiceAttendance {
     private final RepositoryTerminal repositoryTerminal;
     private final RepositoryTag repositoryTag;
 
-    public GlobalResponse<EntityAttender> saveAttender(RequestAttend request) {
+    public GlobalResponse<EntityAttendance> saveAttender(RequestAttend request) {
         List<EntityUser> listUser = repositoryUser.findByTag_Name(request.getTag());
         int sizeListUser = listUser.size();
         if (sizeListUser == 0) {
@@ -56,9 +56,9 @@ public class ServiceAttendance {
         EntityUser user = listUser.get(0);
         EntityTerminal terminal = listTerminal.get(0);
         EntityTag tag = listTag.get(0);
-        EntityAttender entity = new EntityAttender(user.getId(), terminal.getId(), tag.getId());
+        EntityAttendance entity = new EntityAttendance(user.getId(), terminal.getId(), tag.getId());
 
-        EntityAttender response = repositoryAttendance.save(entity);
+        EntityAttendance response = repositoryAttendance.save(entity);
 
         ReturnCode code = ReturnCode.OK;
         return new GlobalResponse<>(
@@ -69,11 +69,11 @@ public class ServiceAttendance {
         );
     }
 
-    public GlobalResponse<List<ResponseGetAttender>> getAttenders(Long idUser, LocalDate from, LocalDate to) {
+    public GlobalResponse<List<ResponseGetAttendance>> getAttenders(Long idUser, LocalDate from, LocalDate to) {
         LocalDateTime start = getStartOfDay(from);
         LocalDateTime end = getStartOfDay(to).plusDays(1);
 
-        List<ResponseGetAttender> response = repositoryAttendance.findDailyTagAttendance(idUser, start, end);
+        List<ResponseGetAttendance> response = repositoryAttendance.findDailyTagAttendance(idUser, start, end);
 
         ReturnCode code = ReturnCode.OK;
         return new GlobalResponse<>(
