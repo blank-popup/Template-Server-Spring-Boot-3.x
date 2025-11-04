@@ -50,6 +50,18 @@ DELETE {{host}}/admin/role/7 HTTP/1.1
 Authorization: Bearer {{token}}
 
 
+### Register Group
+# POST {{host}}/admin/group/{groupName} HTTP/1.1
+POST {{host}}/admin/group/GROUP_NAME HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Remove Group
+# DELETE {{host}}/admin/group/{groupId} HTTP/1.1
+DELETE {{host}}/admin/group/7 HTTP/1.1
+Authorization: Bearer {{token}}
+
+
 ### Add role to endpoint
 # POST {{host}}/admin/security/endpoint/{endpointId}/role/{roleId}
 POST {{host}}/admin/security/endpoint/18/role/1
@@ -74,6 +86,30 @@ DELETE {{host}}/admin/security/user/11/role/2
 Authorization: Bearer {{token}}
 
 
+### Add group to user
+# POST {{host}}/admin/security/user/{userId}/group/{groupId}
+POST {{host}}/admin/security/user/11/group/2
+Authorization: Bearer {{token}}
+
+
+### Remove group from user
+# DELETE {{host}}/admin/security/user/{userId}/group/{groupId}
+DELETE {{host}}/admin/security/user/11/group/2
+Authorization: Bearer {{token}}
+
+
+### Add role to group
+# POST {{host}}/admin/security/group/{groupId}/role/{roleId}
+POST {{host}}/admin/security/group/11/role/2
+Authorization: Bearer {{token}}
+
+
+### Remove role from group
+# DELETE {{host}}/admin/security/group/{groupId}/role/{roleId}
+DELETE {{host}}/admin/security/group/11/role/2
+Authorization: Bearer {{token}}
+
+
 ### Scan endpoint
 POST {{host}}/admin/endpoint/scan
 Authorization: Bearer {{token}}
@@ -84,22 +120,25 @@ POST {{host}}/admin/endpoint/refresh
 Authorization: Bearer {{token}}
 
 
-### Enable or Disable Logging Parameter
+### Enable or Disable Logging in AOP
+# POST {{host}}/admin/logging/aop?requestOnOff=on&responseOnOff=on&databaseOnOff=on HTTP/1.1
 POST {{host}}/admin/logging/aop?requestOnOff=on&responseOnOff=on&databaseOnOff=on HTTP/1.1
 Authorization: Bearer {{token}}
 
 
-### Get Logging Parameter
+### Get Logging status in AOP
 GET {{host}}/admin/logging/aop HTTP/1.1
 Authorization: Bearer {{token}}
 
 
 ### Set Level of Logger
+# POST {{host}}/admin/logging/level/{loggerName}?level=debug HTTP/1.1
 POST {{host}}/admin/logging/level/org.duckdns.ahamike?level=debug HTTP/1.1
 Authorization: Bearer {{token}}
 
 
 ### Get Level of Logger
+# GET {{host}}/admin/logging/level/{loggerName} HTTP/1.1
 GET {{host}}/admin/logging/level/org.hibernate.SQL HTTP/1.1
 Authorization: Bearer {{token}}
 
@@ -175,14 +214,20 @@ Authorization: Bearer {{token}}
 
 
 ### Get User
-# GET {{host}}/user HTTP/1.1
-GET {{host}}/admin/user?username=un10&name=nm10&tag=0010 HTTP/1.1
+# GET {{host}}/admin/user?username=un10&name=nm10&tag=0010 HTTP/1.1
+GET {{host}}/admin/user?username=user02 HTTP/1.1
 Authorization: Bearer {{token}}
 
 
-## Register Terminal
+### Register Terminal
 # POST {{host}}/terminal/{terminalName} HTTP/1.1
 POST {{host}}/terminal/terminal03 HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Remove Terminal
+# DELETE {{host}}/terminal/{terminalId} HTTP/1.1
+DELETE {{host}}/terminal/7 HTTP/1.1
 Authorization: Bearer {{token}}
 
 
@@ -191,13 +236,13 @@ POST {{host}}/attendance HTTP/1.1
 Content-Type: application/json
 
 {
-    "tag": "0003",
-    "terminal": "t2"
+    "tag": "tag01",
+    "terminal": "terminal00"
 }
 
 
 ### Get record of Attendance
-GET {{host}}/attendance?idUser=11&from=2025-07-04&to=2025-07-23 HTTP/1.1
+GET {{host}}/attendance?userId=5&from=2025-07-04&to=2025-11-05 HTTP/1.1
 
 
 ### Upload File
@@ -229,6 +274,6 @@ descriptionValue
 
 
 ### Download File
-# GET {{host}}/file//{transferFileId} HTTP/1.1
+# GET {{host}}/file/{transferFileId} HTTP/1.1
 GET {{host}}/file/44 HTTP/1.1
 
