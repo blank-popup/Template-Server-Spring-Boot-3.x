@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.duckdns.ahamike.rollbook.config.logging.Asyncronous;
 import org.duckdns.ahamike.rollbook.table.EntityEndpoint;
 import org.duckdns.ahamike.rollbook.table.EntityRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class CacheEndpoint {
     @Autowired
     private PathPatternParser pathPatternParser;
 
-    public CacheEndpoint(RequestMappingHandlerMapping handlerMapping, Asyncronous asyncronous) {
+    public CacheEndpoint(RequestMappingHandlerMapping handlerMapping) {
         this.handlerMapping = handlerMapping;
     }
 
@@ -58,7 +57,6 @@ public class CacheEndpoint {
             for (String path : patterns) {
                 for (RequestMethod method : methods) {
                     String parameter = buildEndpointParameter(handlerMethod);
-                    // String endpointName = buildEndpointName(method.name(), path, handlerMethod);
                     String endpointName = method.name() + " " + path + " " + parameter;
                     endpoints.stream()
                             .filter(ep -> endpointName.equals(ep.getName()))
