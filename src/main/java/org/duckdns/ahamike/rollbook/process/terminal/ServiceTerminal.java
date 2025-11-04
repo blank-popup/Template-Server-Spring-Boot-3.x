@@ -22,10 +22,7 @@ public class ServiceTerminal {
             throw new ExceptionBusiness(ReturnCode.DATA_ALREADY_EXISTS, "Terminal already exists");
         }
 
-        EntityTerminal entity = new EntityTerminal(
-                terminalName
-        );
-
+        EntityTerminal entity = new EntityTerminal(terminalName);
         EntityTerminal response = repositoryTerminal.save(entity);
 
         ReturnCode code = ReturnCode.OK;
@@ -34,6 +31,21 @@ public class ServiceTerminal {
                 code.getMessage(),
                 code.getHttpStatus(),
                 response
+        );
+    }
+
+    public GlobalResponse<EntityTerminal> removeTerminal(Long terminalId) {
+        repositoryTerminal.findById(terminalId)
+                .orElseThrow(() -> new ExceptionBusiness(ReturnCode.NO_SUCH_DATA, "Terminal does not exist"));
+
+        repositoryTerminal.deleteById(terminalId);
+
+        ReturnCode code = ReturnCode.OK;
+        return new GlobalResponse<>(
+                code.getCode(),
+                code.getMessage(),
+                code.getHttpStatus(),
+                null
         );
     }
 }

@@ -2,6 +2,7 @@ package org.duckdns.ahamike.rollbook.process.terminal;
 
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,14 @@ public class ControllerTerminal {
     @PostMapping("/{terminalName}")
     public ResponseEntity<?> registerTerminal(@PathVariable(name = "terminalName") String terminalName) {
         GlobalResponse<?> response = serviceTerminal.registerTerminal(terminalName);
+        return ResponseEntity
+                .status(response.getHttpStatus())
+                .body(response);
+    }
+
+    @DeleteMapping("/{terminalId}")
+    public ResponseEntity<?> removeRole(@PathVariable(name = "terminalId") Long terminalId) {
+        GlobalResponse<?> response = serviceTerminal.removeTerminal(terminalId);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
