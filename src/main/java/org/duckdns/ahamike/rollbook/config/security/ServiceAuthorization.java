@@ -1,7 +1,7 @@
 package org.duckdns.ahamike.rollbook.config.security;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -70,7 +70,7 @@ public class ServiceAuthorization implements AuthorizationManager<RequestAuthori
             return new AuthorizationDecision(false);
         }
 
-        List<String> requiredRoles = cacheEndpoint.getRoles(endpointName);
+        Set<String> requiredRoles = cacheEndpoint.getRoles(endpointName);
         if (requiredRoles.isEmpty()) {
             return new AuthorizationDecision(false);
         }
