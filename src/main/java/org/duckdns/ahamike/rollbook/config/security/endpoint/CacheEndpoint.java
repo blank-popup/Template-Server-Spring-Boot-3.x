@@ -95,11 +95,7 @@ public class CacheEndpoint {
                             pathPatternParser.parse(endpoint.getPath()),
                             endpoint.getRoles().stream()
                                     .map(EntityRole::getName)
-                                    .collect(Collectors.toList())
-                                    // ,(list1, list2) -> {
-                                    //     list1.addAll(list2);
-                                    //     return list1;
-                                    // }
+                                    .collect(Collectors.toSet())
                         )
                 ));
         log.info("CacheEndpoint roleMap refreshed: {}", mapEndpointRoles);
@@ -107,20 +103,20 @@ public class CacheEndpoint {
         return mapEndpointRoles;
     }
 
-    public List<String> getRoles(String endpointName) {
+    public Set<String> getRoles(String endpointName) {
         InfoEndpoint infoEndpoint = mapEndpointRoles.get(endpointName);
         return infoEndpoint.getRoles();
     }
 
     public void addRole(String endpointName, String role) {
-        List<String> roles = getRoles(endpointName);
+        Set<String> roles = getRoles(endpointName);
         if (roles.stream().anyMatch(r -> r.equals(role)) == false) {
             roles.add(role);
         }
     }
 
     public void removeRole(String endpointName, String role) {
-        List<String> roles = getRoles(endpointName);
+        Set<String> roles = getRoles(endpointName);
         if (roles.stream().anyMatch(r -> r.equals(role)) == true) {
             roles.remove(role);
         }

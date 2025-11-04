@@ -2,8 +2,11 @@ package org.duckdns.ahamike.rollbook.config.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.duckdns.ahamike.rollbook.table.EntityGroup;
 import org.duckdns.ahamike.rollbook.table.EntityRole;
 import org.duckdns.ahamike.rollbook.table.EntityUser;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +27,8 @@ public class UserDetailsCustom implements UserDetails {
     private String email;
     private String phone;
     private String tag;
-    private List<String> roles = new ArrayList<>();
+    private Set<String> roles = new HashSet<>();
+    private Set<String> groups = new HashSet<>();
     private Long activate;
 
     @Override
@@ -89,7 +93,19 @@ public class UserDetailsCustom implements UserDetails {
             this.tag = null;
         }
         for (EntityRole role : user.getRoles()) {
-            this.roles.add(role.getName());
+            if (this.roles.contains(role.getName()) == false) {
+                this.roles.add(role.getName());
+            }
+        }
+        for (EntityGroup group : user.getGroups()) {
+            if (this.groups.contains(group.getName()) == false) {
+                this.groups.add(group.getName());
+            }
+            for (EntityRole role : group.getRoles()) {
+                if (this.roles.contains(role.getName()) == false) {
+                    this.roles.add(role.getName());
+                }
+            }
         }
         this.activate = user.getActive();
     }

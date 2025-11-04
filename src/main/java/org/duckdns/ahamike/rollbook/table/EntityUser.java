@@ -1,8 +1,8 @@
 package org.duckdns.ahamike.rollbook.table;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.duckdns.ahamike.rollbook.config.autitable.AuditableCU;
 
@@ -74,15 +74,15 @@ public class EntityUser extends AuditableCU {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<EntityRole> roles = new ArrayList<>();
+    private Set<EntityRole> roles = new HashSet<>();
 
-    // @ManyToMany(fetch = FetchType.LAZY)
-    // @JoinTable(
-    //         name = "tb_user_group",
-    //         joinColumns = @JoinColumn(name = "id_user"),
-    //         inverseJoinColumns = @JoinColumn(name = "id_group")
-    // )
-    // private List<EntityGroup> groups = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "tb_user_group",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_group")
+    )
+    private Set<EntityGroup> groups = new HashSet<>();
 
     @Column(name = "active")
     private Long active;
@@ -105,7 +105,7 @@ public class EntityUser extends AuditableCU {
         }
     }
 
-    public EntityUser(String username, String password, EntityTag entityTag, String name, String email, String phone, List<EntityRole> roles) {
+    public EntityUser(String username, String password, EntityTag entityTag, String name, String email, String phone, Set<EntityRole> roles) {
         this.username = username;
         this.password = password;
         this.tag = entityTag;
@@ -115,7 +115,7 @@ public class EntityUser extends AuditableCU {
         this.roles = roles;
     }
 
-    public EntityUser(String username, String password, String tag, String name, String email, String phone, List<EntityRole> roles) {
+    public EntityUser(String username, String password, String tag, String name, String email, String phone, Set<EntityRole> roles) {
         this.username = username;
         this.password = password;
         setTag(tag);
@@ -139,10 +139,26 @@ public class EntityUser extends AuditableCU {
     }
 
     public void addRole(EntityRole role) {
-        this.roles.add(role);
+        if (this.roles.stream().anyMatch(r -> r.getName() != null && r.getName().equals(role.getName())) == false) {
+            this.roles.add(role);
+        }
     }
 
     public void removeRole(EntityRole role) {
-        this.roles.remove(role);
+        if (this.roles.stream().anyMatch(r -> r.getName() != null && r.getName().equals(role.getName())) == true) {
+            this.roles.remove(role);
+        }
+    }
+
+    public void addGroup(EntityGroup group) {
+        if (this.groups.stream().anyMatch(g -> g.getName() != null && g.getName().equals(group.getName())) == false) {
+            this.groups.add(group);
+        }
+    }
+
+    public void removeGroup(EntityGroup group) {
+        if (this.groups.stream().anyMatch(g -> g.getName() != null && g.getName().equals(group.getName())) == true) {
+            this.groups.remove(group);
+        }
     }
 }

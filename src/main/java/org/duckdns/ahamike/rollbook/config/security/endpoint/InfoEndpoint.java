@@ -1,6 +1,6 @@
 package org.duckdns.ahamike.rollbook.config.security.endpoint;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.web.util.pattern.PathPattern;
 
@@ -16,5 +16,5 @@ public class InfoEndpoint {
     private String method;
     private String path;
     private PathPattern pattern;
-    private List<String> roles;
+    private Set<String> roles;
 }

@@ -14,7 +14,8 @@ public interface RepositoryUser extends JpaRepository<EntityUser, Long> {
             SELECT u
             FROM EntityUser u
             JOIN FETCH u.tag t
-            JOIN FETCH u.roles r
+            LEFT JOIN FETCH u.roles r
+            LEFT JOIN FETCH u.groups g
             WHERE (:username is null OR u.username = :username)
                 AND (:name is null OR u.name = :name)
                 AND (:tag is null OR t.name = :tag)

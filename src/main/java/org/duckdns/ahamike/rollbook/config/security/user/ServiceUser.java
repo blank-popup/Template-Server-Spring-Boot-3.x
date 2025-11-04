@@ -1,6 +1,8 @@
 package org.duckdns.ahamike.rollbook.config.security.user;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.exception.ExceptionBusiness;
@@ -76,8 +78,8 @@ public class ServiceUser {
             entityTag = repositoryTag.save(new EntityTag(tagName));
         }
 
-        List<EntityRole> listRole = repositoryRole.findAllByNameIn(request.getRoles());
-        if (listRole.size() != request.getRoles().size()) {
+        Set<EntityRole> setRole = repositoryRole.findAllByNameIn(request.getRoles());
+        if (setRole.size() != request.getRoles().size()) {
             throw new ExceptionBusiness(ReturnCode.NO_SUCH_DATA, "Role does not exist");
         }
 
@@ -89,7 +91,7 @@ public class ServiceUser {
             request.getName(),
             request.getEmail(),
             request.getPhone(),
-            listRole
+            setRole
         );
         
         EntityUser response = repositoryUser.save(entity);
@@ -118,7 +120,7 @@ public class ServiceUser {
         String ip = ClientInfo.getRemoteIP(httpRequest);
         String userAgent = httpRequest.getHeader("User-Agent");
         log.info("Username: [{}], IP Address: [{}], User-Agent : [{}]", user.getUsername(), ip, userAgent);
-        String token = providerJwt.createJwt(user.getUsername(), user.getRoles().stream().map(EntityRole::getName).toList(), ip, userAgent);
+        String token = providerJwt.createJwt(user.getUsername(), user.getRoles().stream().map(EntityRole::getName).collect(Collectors.toSet()), ip, userAgent);
         serviceRedis.setValue(group0_user, user.getUsername(), token, user, serviceRedis.getExpireSeconds());
 
         String usernameKey = serviceRedis.buildKey(group0_user, user.getUsername(), token);

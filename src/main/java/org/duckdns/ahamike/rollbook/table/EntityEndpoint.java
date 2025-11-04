@@ -1,6 +1,6 @@
 package org.duckdns.ahamike.rollbook.table;
 
-import java.util.List;
+import java.util.Set;
 
 import org.duckdns.ahamike.rollbook.config.autitable.AuditableC;
 
@@ -61,7 +61,7 @@ public class EntityEndpoint extends AuditableC {
             joinColumns = @JoinColumn(name = "endpoint_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<EntityRole> roles;
+    private Set<EntityRole> roles;
 
     @Column(name = "active")
     private Long active;
@@ -81,10 +81,14 @@ public class EntityEndpoint extends AuditableC {
     }
 
     public void addRole(EntityRole role) {
-        this.roles.add(role);
+        if (this.roles.stream().anyMatch(r -> r.getName() != null && r.getName().equals(role.getName())) == false) {
+            this.roles.add(role);
+        }
     }
 
     public void removeRole(EntityRole role) {
-        this.roles.remove(role);
+        if (this.roles.stream().anyMatch(r -> r.getName() != null && r.getName().equals(role.getName())) == true) {
+            this.roles.remove(role);
+        }
     }
 }

@@ -2,7 +2,7 @@ package org.duckdns.ahamike.rollbook.config.security;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import org.duckdns.ahamike.rollbook.config.redis.ServiceRedis;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
@@ -49,7 +49,7 @@ public class ProviderJwt implements InitializingBean {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createJwt(String username, List<String> roles, String ip, String userAgent) {
+    public String createJwt(String username, Set<String> roles, String ip, String userAgent) {
         ClaimsBuilder claimsBuilder = Jwts.claims().subject(username);
         claimsBuilder.add("roles", roles);
         claimsBuilder.add("ip", ip);
