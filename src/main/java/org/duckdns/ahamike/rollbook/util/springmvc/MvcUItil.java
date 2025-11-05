@@ -44,8 +44,7 @@ public class MvcUItil {
         return null;
     }
 
-    public static String getCurrentToken() {
-        HttpServletRequest request = getCurrentRequest();
+    public static String getCurrentToken(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
