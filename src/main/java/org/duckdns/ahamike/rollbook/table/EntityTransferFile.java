@@ -1,13 +1,12 @@
 package org.duckdns.ahamike.rollbook.table;
 
-import org.duckdns.ahamike.rollbook.config.autitable.AuditableC;
+import org.duckdns.ahamike.rollbook.config.autitable.AuditableCU;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ import lombok.NoArgsConstructor;
 )
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityTransferFile extends AuditableC {
+public class EntityTransferFile extends AuditableCU {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,16 +66,6 @@ public class EntityTransferFile extends AuditableC {
 
     @Column(name = "mime_parameter")
     private String mimeParameter;
-
-    @Column(name = "active")
-    private Long active;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.active == null) {
-            this.active = 100L;
-        }
-    }
 
     public EntityTransferFile(String subDirectory, String filename, String originalFilename, String description, String directory0, String directory1, String directory2, String mimeType, String mimeSubtype, String mimeParameter) {
         this.subDirectory = subDirectory;

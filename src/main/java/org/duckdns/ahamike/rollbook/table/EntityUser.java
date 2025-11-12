@@ -84,9 +84,6 @@ public class EntityUser extends AuditableCU {
     )
     private Set<EntityGroup> groups = new HashSet<>();
 
-    @Column(name = "active")
-    private Long active;
-
     @Transient
     private boolean passwordChanged = false;
 
@@ -96,9 +93,7 @@ public class EntityUser extends AuditableCU {
 
     @PrePersist
     public void prePersist() {
-        if (this.active == null) {
-            this.active = 100L;
-        }
+        super.prePersist();
         if (passwordChanged == true) {
             this.passwordedAt = LocalDateTime.now();
             this.passwordChanged = false;

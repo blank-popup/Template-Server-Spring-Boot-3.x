@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,16 +34,6 @@ public class EntityAttendance extends AuditableC {
     @Column(name = "tag_id")
     private Long tagId;
 
-    @Column(name = "active")
-    private Long active;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.active == null) {
-            this.active = 100L;
-        }
-    }
-    
     public EntityAttendance(Long userId, Long terminalId, Long tagId) {
         this.userId = userId;
         this.terminalId = terminalId;

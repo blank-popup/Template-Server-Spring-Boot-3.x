@@ -2,7 +2,7 @@ package org.duckdns.ahamike.rollbook.table;
 
 import java.util.Set;
 
-import org.duckdns.ahamike.rollbook.config.autitable.AuditableC;
+import org.duckdns.ahamike.rollbook.config.autitable.AuditableCU;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -37,7 +36,7 @@ import lombok.NoArgsConstructor;
 )
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityEndpoint extends AuditableC {
+public class EntityEndpoint extends AuditableCU {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,16 +61,6 @@ public class EntityEndpoint extends AuditableC {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<EntityRole> roles;
-
-    @Column(name = "active")
-    private Long active;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.active == null) {
-            this.active = 100L;
-        }
-    }
 
     public EntityEndpoint(String name, String method, String path, String parameter) {
         this.name = name;

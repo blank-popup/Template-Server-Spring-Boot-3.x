@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -39,16 +38,6 @@ public class EntityTerminal extends AuditableCU {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "active")
-    private Long active;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.active == null) {
-            this.active = 100L;
-        }
-    }
 
     public EntityTerminal(String name) {
         this.name = name;
