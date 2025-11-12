@@ -17,5 +17,5 @@ public class RequestSignUp {
     private String name;
     private String email;
     private String phone;
-    private List<String> roles = new ArrayList<String>();
+    private List<String> roles = new ArrayList<>();
 }
