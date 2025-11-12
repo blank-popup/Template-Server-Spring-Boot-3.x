@@ -34,16 +34,16 @@ public class EntityApiHistory {
     @Column(name = "uri")
     private String uri;
 
-    @Column(name = "path_variable")
+    @Column(name = "path_variable", columnDefinition = "TEXT")
     private String pathVariable;
 
-    @Column(name = "request_param")
+    @Column(name = "request_param", columnDefinition = "TEXT")
     private String requestParam;
 
-    @Column(name = "request_part_file")
+    @Column(name = "request_part_file", columnDefinition = "TEXT")
     private String requestPartFile;
 
-    @Column(name = "request_part_param")
+    @Column(name = "request_part_param", columnDefinition = "TEXT")
     private String requestPartParam;
 
     @Column(name = "ip")
@@ -62,10 +62,10 @@ public class EntityApiHistory {
     @Column(name = "duration")
     private Long duration;
 
-    @Column(name = "request_body", length = 2000)
+    @Column(name = "request_body", columnDefinition = "LONGTEXT")
     private String requestBody;
 
-    @Column(name = "response_body", length = 2000)
+    @Column(name = "response_body", columnDefinition = "LONGTEXT")
     private String responseBody;
 
     public EntityApiHistory(String username, String method, String uri, String pathVariable, String requestParam, String requestPartFile, String requestPartParam, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration, String requestBody, String responseBody) {
