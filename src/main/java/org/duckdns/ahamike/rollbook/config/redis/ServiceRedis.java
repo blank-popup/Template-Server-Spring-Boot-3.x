@@ -25,7 +25,7 @@ public class ServiceRedis {
     public ServiceRedis(RedisTemplate<String, Object> redisTemplate,
             @Value("${server.servlet.context-path}") String contextPath,
             @Value("${auth.jwt.expiration-access}") long expireMilliSeconds,
-            @Value("${spring.data.redis.key_delimiter}")String key_delimiter) {
+            @Value("${spring.data.redis.key_delimiter}") String key_delimiter) {
         this.redisTemplate = redisTemplate;
         if (contextPath == null) {
             this.KEY_PREFIX = "[NULL]";
