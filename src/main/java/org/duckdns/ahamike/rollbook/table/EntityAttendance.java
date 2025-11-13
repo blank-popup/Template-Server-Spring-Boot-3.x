@@ -1,6 +1,6 @@
 package org.duckdns.ahamike.rollbook.table;
 
-import org.duckdns.ahamike.rollbook.config.autitable.AuditableC;
+import org.duckdns.ahamike.rollbook.config.autitable.AuditableCU;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_attendance")
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityAttendance extends AuditableC {
+public class EntityAttendance extends AuditableCU {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

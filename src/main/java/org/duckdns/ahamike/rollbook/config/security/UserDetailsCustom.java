@@ -1,9 +1,7 @@
 package org.duckdns.ahamike.rollbook.config.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.duckdns.ahamike.rollbook.table.EntityGroup;
@@ -29,11 +27,11 @@ public class UserDetailsCustom implements UserDetails {
     private String tag;
     private Set<String> roles = new HashSet<>();
     private Set<String> groups = new HashSet<>();
-    private Long activate;
+    private Boolean isEnabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
@@ -71,12 +69,7 @@ public class UserDetailsCustom implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isEnabled() {
-        if (activate == 100) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return isEnabled;
     }
 
     public UserDetailsCustom(EntityUser user) {
@@ -107,6 +100,6 @@ public class UserDetailsCustom implements UserDetails {
                 }
             }
         }
-        this.activate = user.getActive();
+        this.isEnabled = user.getIsEnabled();
     }
 }

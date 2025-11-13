@@ -20,7 +20,16 @@ import lombok.Getter;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditableCU implements Serializable {
+public abstract class AuditableCUS implements Serializable {
+
+    @Column(name = "is_non_locked")
+    protected Boolean isNonLocked;
+
+    @Column(name = "is_non_expired")
+    protected Boolean isNonExpired;
+
+    @Column(name = "is_non_deleted")
+    protected Boolean isNonDeleted;
 
     @Column(name = "is_enabled")
     protected Boolean isEnabled;
@@ -45,6 +54,15 @@ public abstract class AuditableCU implements Serializable {
 
     @PrePersist
     public void prePersist() {
+        if (this.isNonLocked == null) {
+            this.isNonLocked = true;
+        }
+        if (this.isNonExpired == null) {
+            this.isNonExpired = true;
+        }
+        if (this.isNonDeleted == null) {
+            this.isNonDeleted = true;
+        }
         if (this.isEnabled == null) {
             this.isEnabled = true;
         }
