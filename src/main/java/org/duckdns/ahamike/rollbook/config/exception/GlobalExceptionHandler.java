@@ -138,7 +138,7 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
     
     @ExceptionHandler(NumberFormatException.class)
     public ResponseEntity<?> handleNumberFormatException(NumberFormatException ex, HttpServletRequest httpServletRequest) {
-        ReturnCode code = ReturnCode.NUMBER_DORMAT;
+        ReturnCode code = ReturnCode.NUMBER_FORMAT;
         ResponseEntity<?> response = buildResponseEntity(code, ex, httpServletRequest);
         logHistory(response);
         return response;
