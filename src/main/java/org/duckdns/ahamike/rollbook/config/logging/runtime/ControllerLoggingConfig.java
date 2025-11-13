@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/admin/logging")
 @Slf4j
 public class ControllerLoggingConfig {
-    // private final LoggingParameterService logggingParameterService;
+
     private final ServiceLoggingConfig serviceLoggingConfig;
     private final List<String> loggerNames = Arrays.asList(
         "org.apache.catalina.startup.DigesterFactory",
