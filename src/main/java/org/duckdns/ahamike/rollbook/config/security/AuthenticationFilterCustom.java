@@ -26,7 +26,14 @@ public class AuthenticationFilterCustom extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.debug("\nExecute Order :\n1. AuthenticationFilterCustom.doFilter\n2. UserDetailsServiceCustom.loadUserByUsername\n3. UserDetailsCustom.getRoles\n4. ServiceAuthorization.check");
+
+        log.debug("\nExecute Order :\n"
+            + "1. AuthenticationFilterCustom.doFilter\n"
+            + "2. UserDetailsServiceCustom.loadUserByUsername\n"
+            + "3. UserDetailsCustom.getRoles\n"
+            + "4. ServiceAuthorization.check"
+        );
+
         while (true) {
             String method = request.getMethod();
             String contextPath = request.getContextPath();

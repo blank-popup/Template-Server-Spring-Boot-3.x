@@ -11,12 +11,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RequestCachingFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+
+        log.debug("$$$ Enter RequestCachingFilter.doFilter");
 
         HttpServletRequest request = (HttpServletRequest) req;
         ContentCachingRequestWrapper cachingRequest = new ContentCachingRequestWrapper(request);

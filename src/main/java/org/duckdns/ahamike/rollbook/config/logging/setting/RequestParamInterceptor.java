@@ -23,6 +23,8 @@ public class RequestParamInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
+        log.debug("$$$ Enter RequestParamInterceptor.preHandle");
+
         InfoRequestParam infoRequestParam = (InfoRequestParam) request.getAttribute("InfoRequestParam");
         if (infoRequestParam == null) {
             return true;
