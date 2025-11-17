@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging.runtime;
+package org.duckdns.ahamike.rollbook.config.logging;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoLoggingLevel {
+public class ResponseLoggingLevel {
     private String loggerName;
     private String level;
 }

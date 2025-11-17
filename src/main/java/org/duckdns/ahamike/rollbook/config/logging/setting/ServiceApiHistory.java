@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging;
+package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.time.LocalDateTime;
 

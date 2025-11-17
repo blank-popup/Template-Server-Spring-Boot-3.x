@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging;
+package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -7,7 +7,7 @@ import java.time.ZoneId;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.duckdns.ahamike.rollbook.config.logging.runtime.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.duckdns.ahamike.rollbook.util.json.JsonUtil;
 import org.duckdns.ahamike.rollbook.util.str.Str;

@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging.runtime;
+package org.duckdns.ahamike.rollbook.config.logging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,7 +118,7 @@ public class ControllerLoggingConfig {
 
     @GetMapping("/level/{loggerName}")
     public ResponseEntity<?> getLoggingLevel(@PathVariable(name = "loggerName") String loggerName) {
-        InfoLoggingLevel response = new InfoLoggingLevel();
+        ResponseLoggingLevel response = new ResponseLoggingLevel();
         response.setLoggerName(loggerName);
         response.setLevel(serviceLoggingConfig.getLogLevel(loggerName).toString());
 
@@ -127,11 +127,11 @@ public class ControllerLoggingConfig {
     }
 
     @PostMapping("/levels")
-    public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<InfoLoggingLevel> levels) {
+    public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<RequestLoggingLevel> levels) {
         if (levels.size() == 0) {
             throw new ExceptionBusiness(ReturnCode.EMPTY_ARRAY, "Input array is empty");
         }
-        for (InfoLoggingLevel item : levels) {
+        for (RequestLoggingLevel item : levels) {
             serviceLoggingConfig.setLogLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));
         }
 
@@ -140,9 +140,9 @@ public class ControllerLoggingConfig {
 
     @GetMapping("/levels")
     public ResponseEntity<?> getAllLoggingLevels() {
-        List<InfoLoggingLevel> response = new ArrayList<>();
+        List<ResponseLoggingLevel> response = new ArrayList<>();
         for (String loggerName : loggerNames) {
-            InfoLoggingLevel item = new InfoLoggingLevel();
+            ResponseLoggingLevel item = new ResponseLoggingLevel();
             item.setLoggerName(loggerName);
             item.setLevel(serviceLoggingConfig.getLogLevel(loggerName).toString());
             response.add(item);

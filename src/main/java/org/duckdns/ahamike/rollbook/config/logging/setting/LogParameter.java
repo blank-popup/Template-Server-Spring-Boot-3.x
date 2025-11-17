@@ -1,8 +1,8 @@
-package org.duckdns.ahamike.rollbook.config.logging;
+package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.time.LocalDateTime;
 
-import org.duckdns.ahamike.rollbook.config.logging.runtime.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.logging.runtime;
+package org.duckdns.ahamike.rollbook.config.logging;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.duckdns.ahamike.rollbook.config.logging.InfoRequestParam;
-import org.duckdns.ahamike.rollbook.config.logging.InfoRequestParam.FileMeta;
+import org.duckdns.ahamike.rollbook.config.logging.setting.InfoRequestParam.FileMeta;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;

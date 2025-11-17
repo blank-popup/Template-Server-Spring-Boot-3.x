@@ -2,7 +2,6 @@ package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.io.IOException;
 
-import org.duckdns.ahamike.rollbook.config.logging.InfoRequestParam;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import jakarta.servlet.Filter;

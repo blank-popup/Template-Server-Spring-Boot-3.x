@@ -3,7 +3,7 @@ package org.duckdns.ahamike.rollbook.config.runInitialization;
 import java.util.List;
 import java.util.Set;
 
-import org.duckdns.ahamike.rollbook.config.logging.runtime.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
