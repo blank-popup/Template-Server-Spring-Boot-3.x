@@ -3,6 +3,7 @@ package org.duckdns.ahamike.rollbook.config.autitable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,14 +14,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@SQLRestriction("is_enabled = true")
 public abstract class AuditableCUS implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "is_non_locked")
     protected Boolean isNonLocked;
