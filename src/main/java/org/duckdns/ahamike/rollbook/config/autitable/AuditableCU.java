@@ -3,7 +3,6 @@ package org.duckdns.ahamike.rollbook.config.autitable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -24,13 +23,12 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@SQLRestriction("is_enabled = true")
 public abstract class AuditableCU implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column(name = "is_enabled")
     protected Boolean isEnabled;
