@@ -56,8 +56,8 @@ public class CacheEndpoint {
 
             for (String path : patterns) {
                 for (RequestMethod method : methods) {
+                    String endpointName = buildEndpointName(handlerMethod);
                     String parameter = buildEndpointParameter(handlerMethod);
-                    String endpointName = method.name() + " " + path + " " + parameter;
                     endpoints.stream()
                             .filter(ep -> endpointName.equals(ep.getName()))
                             .findFirst()
@@ -108,20 +108,6 @@ public class CacheEndpoint {
         return infoEndpoint.getRoles();
     }
 
-    public void addRole(String endpointName, String role) {
-        Set<String> roles = getRoles(endpointName);
-        if (roles.stream().anyMatch(r -> r.equals(role)) == false) {
-            roles.add(role);
-        }
-    }
-
-    public void removeRole(String endpointName, String role) {
-        Set<String> roles = getRoles(endpointName);
-        if (roles.stream().anyMatch(r -> r.equals(role)) == true) {
-            roles.remove(role);
-        }
-    }
-
     public Map<String, InfoEndpoint> getMapEndpointRoles() {
         return mapEndpointRoles;
     }
@@ -133,6 +119,16 @@ public class CacheEndpoint {
                 .stream()
                 .map(Object::toString)
                 .collect(Collectors.toSet());
+    }
+
+    private String buildEndpointName(HandlerMethod handlerMethod) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(handlerMethod.getBeanType().getSimpleName())
+                .append("_")
+                .append(handlerMethod.getMethod().getName());
+
+        return sb.toString();
     }
 
     private String buildEndpointParameter(HandlerMethod handlerMethod) {
