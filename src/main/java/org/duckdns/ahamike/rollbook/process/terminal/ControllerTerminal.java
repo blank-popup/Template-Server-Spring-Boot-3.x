@@ -27,7 +27,7 @@ public class ControllerTerminal {
     }
 
     @DeleteMapping("/{terminalId}")
-    public ResponseEntity<?> removeRole(@PathVariable(name = "terminalId") Long terminalId) {
+    public ResponseEntity<?> removeTerminal(@PathVariable(name = "terminalId") Long terminalId) {
         GlobalResponse<?> response = serviceTerminal.removeTerminal(terminalId);
         return ResponseEntity
                 .status(response.getHttpStatus())
