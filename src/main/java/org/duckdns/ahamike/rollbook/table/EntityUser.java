@@ -110,24 +110,6 @@ public class EntityUser extends AuditableCU {
         this.roles = roles;
     }
 
-    public EntityUser(String username, String password, String tag, String name, String email, String phone, Set<EntityRole> roles) {
-        this.username = username;
-        this.password = password;
-        setTag(tag);
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.roles = roles;
-    }
-
-    private void setTag(String tag) {
-        if (tag != null) {
-            this.tag = new EntityTag(tag);
-        } else {
-            this.tag = null;
-        }
-    }
-
     public void setPassword(String password) {
         this.password = password;
         this.passwordChanged = true;
