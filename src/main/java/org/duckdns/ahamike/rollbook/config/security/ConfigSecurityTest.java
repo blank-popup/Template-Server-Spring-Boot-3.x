@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.config.security;
 
+import org.duckdns.ahamike.rollbook.config.security.tenant.setting.TenantFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,8 +40,12 @@ public class ConfigSecurityTest {
                         .requestMatchers("/**").permitAll()
                 )
                 .addFilterBefore(
-                        new AuthenticationFilterCustom(providerJwt, providerApiKey),
-                        UsernamePasswordAuthenticationFilter.class
+                    new AuthenticationFilterCustom(providerJwt, providerApiKey),
+                    UsernamePasswordAuthenticationFilter.class
+                )
+                .addFilterBefore(
+                    new TenantFilter(),
+                    AuthenticationFilterCustom.class
                 );
         return http.build();
     }

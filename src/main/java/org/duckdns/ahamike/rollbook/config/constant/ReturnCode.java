@@ -30,6 +30,7 @@ public enum ReturnCode {
     NOT_NULL_AND_WHITESPACE("NOT_NULL_AND_WHITESPACE", "Not null and whitespace data", HttpStatus.BAD_REQUEST),
     EMPTY_ARRAY("EMPTY_ARRAY", "Empty array", HttpStatus.BAD_REQUEST),
     EMPTY_OBJECT("EMPTY_OBJECT", "Empty object", HttpStatus.BAD_REQUEST),
+    NOT_AVAILABLE_VALUE("NOT_AVAILABLE_VALUE", "Not available value", HttpStatus.BAD_REQUEST),
     UNAVAILABLE_MIME_TYPE("UNAVAILABLE_MIME_TYPE", "Unavailable mime type", HttpStatus.BAD_REQUEST),
     FILE_IO_ERROR("FILE_IO_ERROR", "File input/output error", HttpStatus.BAD_REQUEST),
 

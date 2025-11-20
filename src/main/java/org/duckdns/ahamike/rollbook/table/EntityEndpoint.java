@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.table;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.duckdns.ahamike.rollbook.config.autitable.AuditableCU;
@@ -37,10 +38,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EntityEndpoint extends AuditableCU {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -54,19 +51,31 @@ public class EntityEndpoint extends AuditableCU {
     @Column(name = "parameter")
     private String parameter;
 
+    @Column(name = "tenant_belong")
+    private String tenantBelong;
+
+    @Column(name = "tenant_name")
+    private String tenantName;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tb_endpoint_role",
             joinColumns = @JoinColumn(name = "endpoint_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<EntityRole> roles;
+    private Set<EntityRole> roles = new HashSet<>();
 
-    public EntityEndpoint(String name, String method, String path, String parameter) {
+    public EntityEndpoint(String name, String method, String path, String parameter, String tenantBelong, String tenantName) {
         this.name = name;
         this.method = method;
         this.path = path;
         this.parameter = parameter;
+        this.tenantBelong = tenantBelong;
+        this.tenantName = tenantName;
+    }
+
+    public EntityEndpoint(String name, String method, String path, String parameter) {
+        this(name, method, path, parameter, null, null);
     }
 
     public void addRole(EntityRole role) {
