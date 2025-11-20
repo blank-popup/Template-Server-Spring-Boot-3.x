@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.process.file;
 
+import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/file")
 @Slf4j
 public class ControllerTransferFile {
+
     private final ServiceTransferFile serviceTransferFile;
 
+    @EndpointOrder(value0 = 800, value1 = 100)
     @PostMapping
     public ResponseEntity<?> upload(
         @RequestPart(value = "directory0", required = false) String directory0,
@@ -34,6 +37,7 @@ public class ControllerTransferFile {
                 .body(response);
     }
 
+    @EndpointOrder(value0 = 800, value1 = 200)
     @GetMapping("/{transferFileId}")
     public void download(HttpServletResponse response, @PathVariable(value="transferFileId") Long transferFileId) {
         serviceTransferFile.download(response, transferFileId);

@@ -1,11 +1,9 @@
 package org.duckdns.ahamike.rollbook.config.security.endpoint;
 
-import java.util.List;
 import java.util.Map;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
-import org.duckdns.ahamike.rollbook.table.EntityEndpoint;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,16 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/admin/endpoint")
 @Slf4j
 public class ControllerEndpoint {
+
     public final CacheEndpoint cacheEndpoint;
 
-    @PostMapping("/scan")
-    public ResponseEntity<?> scanEnpoint() {
-        List<EntityEndpoint> response = cacheEndpoint.scanEndpoints();
-
-        ReturnCode code = ReturnCode.OK;
-        return buildResponseEntity(code, response);
-    }
-
+    @EndpointOrder(value0 = 500, value1 = 100)
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshCache() {
         Map<String, InfoEndpoint> response = cacheEndpoint.refreshCache();

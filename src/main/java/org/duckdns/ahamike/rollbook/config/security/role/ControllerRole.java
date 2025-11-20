@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.config.security.role;
 
+import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/admin/role")
 @Slf4j
 public class ControllerRole {
+
     private final ServiceRole serviceRole;
 
+    @EndpointOrder(value0 = 200, value1 = 100)
     @PostMapping("/{roleName}")
     public ResponseEntity<?> registerRole(@PathVariable(name = "roleName") String roleName) {
         GlobalResponse<?> response = serviceRole.registerRole(roleName);
@@ -26,6 +29,7 @@ public class ControllerRole {
                 .body(response);
     }
 
+    @EndpointOrder(value0 = 200, value1 = 500)
     @DeleteMapping("/{roleId}")
     public ResponseEntity<?> removeRole(@PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = serviceRole.removeRole(roleId);

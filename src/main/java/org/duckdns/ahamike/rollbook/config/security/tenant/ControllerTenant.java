@@ -40,7 +40,7 @@ public class ControllerTenant {
                 .body(response);
     }
 
-    @EndpointOrder(value0 = 700, value1 = 300)
+    @EndpointOrder(value0 = 700, value1 = 500)
     @DeleteMapping("/{tenantId}")
     public ResponseEntity<?> removeTenant(@PathVariable(name = "tenantId") Long tenantId) {
         GlobalResponse<?> response = serviceTenant.removeTenant(tenantId);

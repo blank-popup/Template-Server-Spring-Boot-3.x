@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.exception.ExceptionBusiness;
+import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class ControllerLoggingConfig {
         "org.hibernate.orm.jdbc.bind"
     );
 
+    @EndpointOrder(value0 = 600, value1 = 1100)
     @PostMapping("/aop")
     public ResponseEntity<?> setLogingAop(
             @RequestParam(name = "requestOnOff", required = false) String request,
@@ -81,6 +83,7 @@ public class ControllerLoggingConfig {
         return getLoggingAop();
     }
 
+    @EndpointOrder(value0 = 600, value1 = 1200)
     @GetMapping("/aop")
     public ResponseEntity<?> getLoggingAop() {
         ResponseLoggingAop response = new ResponseLoggingAop();
@@ -92,6 +95,7 @@ public class ControllerLoggingConfig {
         return buildResponseEntity(code, response);
     }
 
+    @EndpointOrder(value0 = 600, value1 = 2100)
     @PostMapping("/level/{loggerName}")
     public ResponseEntity<?> setLoggingLevel(@PathVariable(name = "loggerName") String loggerName, @RequestParam(name = "level") String level) {
         if ("trace".equalsIgnoreCase(level)) {
@@ -116,6 +120,7 @@ public class ControllerLoggingConfig {
         return getLoggingLevel(loggerName);
     }
 
+    @EndpointOrder(value0 = 600, value1 = 2300)
     @GetMapping("/level/{loggerName}")
     public ResponseEntity<?> getLoggingLevel(@PathVariable(name = "loggerName") String loggerName) {
         ResponseLoggingLevel response = new ResponseLoggingLevel();
@@ -126,6 +131,7 @@ public class ControllerLoggingConfig {
         return buildResponseEntity(code, response);
     }
 
+    @EndpointOrder(value0 = 600, value1 = 3100)
     @PostMapping("/levels")
     public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<RequestLoggingLevel> levels) {
         if (levels.size() == 0) {
@@ -138,6 +144,7 @@ public class ControllerLoggingConfig {
         return getAllLoggingLevels();
     }
 
+    @EndpointOrder(value0 = 600, value1 = 3200)
     @GetMapping("/levels")
     public ResponseEntity<?> getAllLoggingLevels() {
         List<ResponseLoggingLevel> response = new ArrayList<>();

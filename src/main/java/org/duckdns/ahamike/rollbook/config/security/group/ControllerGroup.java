@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.config.security.group;
 
+import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/admin/group")
 @Slf4j
 public class ControllerGroup {
+
     private final ServiceGroup serviceGroup;
 
+    @EndpointOrder(value0 = 300, value1 = 100)
     @PostMapping("/{groupName}")
     public ResponseEntity<?> registerGroup(@PathVariable(name = "groupName") String groupName) {
         GlobalResponse<?> response = serviceGroup.registerGroup(groupName);
@@ -26,6 +29,7 @@ public class ControllerGroup {
                 .body(response);
     }
 
+    @EndpointOrder(value0 = 300, value1 = 500)
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> removeGroup(@PathVariable(name = "groupId") Long groupId) {
         GlobalResponse<?> response = serviceGroup.removeGroup(groupId);

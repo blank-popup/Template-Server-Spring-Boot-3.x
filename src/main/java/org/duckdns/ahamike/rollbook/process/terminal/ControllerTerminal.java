@@ -1,5 +1,6 @@
 package org.duckdns.ahamike.rollbook.process.terminal;
 
+import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/terminal")
 @Slf4j
 public class ControllerTerminal {
+
     private final ServiceTerminal serviceTerminal;
 
+    @EndpointOrder(value0 = 100100, value1 = 100)
     @PostMapping("/{terminalName}")
     public ResponseEntity<?> registerTerminal(@PathVariable(name = "terminalName") String terminalName) {
         GlobalResponse<?> response = serviceTerminal.registerTerminal(terminalName);
@@ -26,6 +29,7 @@ public class ControllerTerminal {
                 .body(response);
     }
 
+    @EndpointOrder(value0 = 100100, value1 = 500)
     @DeleteMapping("/{terminalId}")
     public ResponseEntity<?> removeTerminal(@PathVariable(name = "terminalId") Long terminalId) {
         GlobalResponse<?> response = serviceTerminal.removeTerminal(terminalId);
