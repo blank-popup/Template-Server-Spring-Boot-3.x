@@ -2,14 +2,23 @@ package org.duckdns.ahamike.rollbook.config.security.endpoint;
 
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import org.duckdns.ahamike.rollbook.config.security.role.RepositoryRole;
+import org.duckdns.ahamike.rollbook.config.security.tenant.RepositoryTenant;
+import org.duckdns.ahamike.rollbook.config.security.tenant.setting.TenantContext;
+import org.duckdns.ahamike.rollbook.config.security.user.RepositoryUser;
 import org.duckdns.ahamike.rollbook.table.EntityEndpoint;
 import org.duckdns.ahamike.rollbook.table.EntityRole;
+import org.duckdns.ahamike.rollbook.table.EntityTenant;
+import org.duckdns.ahamike.rollbook.table.EntityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +41,18 @@ public class CacheEndpoint {
 
     @Autowired
     private RepositoryEndpoint repositoryEndpoint;
+
+    @Autowired
+    private RepositoryTenant repositoryTenant;
+
+    @Autowired
+    private RepositoryRole repositoryRole;
+
+    @Autowired
+    private RepositoryUser repositoryUser;
+
     private final RequestMappingHandlerMapping handlerMapping;
+    
     @Autowired
     private PathPatternParser pathPatternParser;
 
@@ -42,42 +62,124 @@ public class CacheEndpoint {
 
     @PostConstruct
     public void loadAll() {
+        createDefaultData();
         scanEndpoints();
         refreshCache();
     }
 
     public List<EntityEndpoint> scanEndpoints() {
-        List<EntityEndpoint> endpoints = repositoryEndpoint.findAll();
-        List<EntityEndpoint> newEndpoints = new ArrayList<>();
+        List<EntityEndpoint> listEndpoint = repositoryEndpoint.findAll();
+        List<EntityEndpoint> newListEndpoint = new ArrayList<>();
+        List<EntityTenant> listTenant = repositoryTenant.findByIsEnabled(true);
 
-        handlerMapping.getHandlerMethods().forEach((mapping, handlerMethod) -> {
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping.getHandlerMethods();
+        List<Map.Entry<RequestMappingInfo, HandlerMethod>> sorted = handlerMethods
+                .entrySet()
+                .stream()
+                .sorted(
+                    Comparator.comparingInt(
+                        (Map.Entry<RequestMappingInfo, HandlerMethod> e) -> Optional.ofNullable(
+                                e.getValue()
+                                        .getMethod()
+                                        .getAnnotation(EndpointOrder.class)
+                        )
+                        .map(EndpointOrder::value0)
+                        .orElse(Integer.MAX_VALUE)
+                    ).thenComparingInt(
+                        e -> Optional.ofNullable(
+                                e.getValue()
+                                        .getMethod()
+                                        .getAnnotation(EndpointOrder.class)
+                        )
+                        .map(EndpointOrder::value1)
+                        .orElse(Integer.MAX_VALUE)
+                    )
+                )
+                .toList();
+
+        Map<RequestMappingInfo, HandlerMethod> sortedMap = sorted
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
+           
+        sortedMap.forEach((mapping, handlerMethod) -> {
             Set<String> patterns = extractPaths(mapping);
             Set<RequestMethod> methods = mapping.getMethodsCondition().getMethods();
-
+                                                                          
             for (String path : patterns) {
                 for (RequestMethod method : methods) {
-                    String endpointName = buildEndpointName(handlerMethod);
-                    String parameter = buildEndpointParameter(handlerMethod);
-                    endpoints.stream()
-                            .filter(ep -> endpointName.equals(ep.getName()))
-                            .findFirst()
-                            .orElseGet(() -> {
-                                EntityEndpoint newEndpoint = new EntityEndpoint(endpointName, method.name(), path, parameter);
-                                newEndpoints.add(newEndpoint);
-                                return newEndpoint;
-                            });
+                    String[] partPath = ("/contextPath" + path).split("/");
+                    if (TenantContext.isBoardPath(partPath) == false) {
+                        String endpointName = buildEndpointName(handlerMethod)
+                                                .replace("Controller", "");
+                        String parameter = buildEndpointParameter(handlerMethod);
+                        listEndpoint.stream()
+                                .filter(ep -> endpointName.equals(ep.getName()))
+                                .findFirst()
+                                .orElseGet(() -> {
+                                    EntityEndpoint newEndpoint = new EntityEndpoint(
+                                            endpointName,
+                                            method.name(),
+                                            path,
+                                            parameter
+                                    );
+                                    newListEndpoint.add(newEndpoint);
+                                    return newEndpoint;
+                                });
+                    }
+                    else {
+                        String tenantBelong = partPath[4];
+                        String tenantName = partPath[5];
+                        for (EntityTenant tenant : listTenant.stream()
+                                                .filter(t -> t.getBelong().equals(tenantBelong))
+                                                .collect(Collectors.toList())) {
+                            String endpointName = tenant.getName()
+                                                + "_"
+                                                + buildEndpointName(handlerMethod)
+                                                    .replace("Controller", "");
+                            String parameter = buildEndpointParameter(handlerMethod);
+                            listEndpoint.stream()
+                                    .filter(ep -> endpointName.equals(ep.getName()))
+                                    .findFirst()
+                                    .orElseGet(() -> {
+                                        EntityEndpoint newEndpoint = new EntityEndpoint(
+                                                endpointName,
+                                                method.name(),
+                                                path.replace(tenantName, tenant.getName()),
+                                                parameter,
+                                                tenantBelong,
+                                                tenant.getName()
+                                        );
+                                        newListEndpoint.add(newEndpoint);
+                                        return newEndpoint;
+                                    });
+                        }
+                    }
                 }
             }
         });
 
-        if (newEndpoints.size() > 0) {
-            log.info("New Endpoints: {}", newEndpoints);
-            repositoryEndpoint.saveAll(newEndpoints);
+        if (newListEndpoint.size() > 0) {
+            log.info("New Endpoints: {}", newListEndpoint);
+            for (EntityEndpoint endpoint : newListEndpoint) {
+                String roleName = "ROLE_" + endpoint.getName().toUpperCase();
+                EntityRole role = repositoryRole.findByName(roleName)
+                        .orElseGet(() -> {
+                            EntityRole newRole = repositoryRole.save(new EntityRole(roleName));
+                            return newRole;
+                        });
+                endpoint.addRole(role);
+            }
+            repositoryEndpoint.saveAll(newListEndpoint);
             return repositoryEndpoint.findAll();
         }
         else {
             log.info("No New Endpoint");
-            return endpoints;
+            return listEndpoint;
         }
     }
 
@@ -112,6 +214,39 @@ public class CacheEndpoint {
         return mapEndpointRoles;
     }
 
+    public void createDefaultData() {
+        EntityRole roleAdmin = createRoleIfNotExists("ROLE_ADMIN");
+        EntityRole roleManager = createRoleIfNotExists("ROLE_MANAGER");
+        EntityRole roleUser = createRoleIfNotExists("ROLE_USER");
+        EntityRole roleCommon = createRoleIfNotExists("ROLE_COMMON");
+        EntityRole roleGuest = createRoleIfNotExists("ROLE_GUEST");
+        Set<EntityRole> adminRoles = Set.of(roleAdmin, roleCommon);
+        Set<EntityRole> managerRoles = Set.of(roleManager, roleCommon);
+        Set<EntityRole> userRoles = Set.of(roleUser, roleCommon);
+        Set<EntityRole> guestRoles = Set.of(roleGuest);
+        createUserIfNotExists("admin", "admin", "admin", adminRoles);
+        createUserIfNotExists("manager", "manager", "manager", managerRoles);
+        createUserIfNotExists("user00", "user00", "user00", userRoles);
+        createUserIfNotExists("user01", "user01", "user01", userRoles);
+        createUserIfNotExists("guest", "guest", "guest", guestRoles);
+    }
+
+    private EntityRole createRoleIfNotExists(String roleName) {
+        return repositoryRole.findByName(roleName)
+                .orElseGet(() -> {
+                    EntityRole newRole = new EntityRole(roleName);
+                    return repositoryRole.save(newRole);
+                });
+    }
+
+    private EntityUser createUserIfNotExists(String username, String password, String name, Set<EntityRole> roles) {
+        return repositoryUser.findByUsername(username)
+                .orElseGet(() -> {
+                    EntityUser newUser = new EntityUser(username, password, null, name, null, null, roles);
+                    roles.forEach(role -> newUser.addRole(role));
+                    return repositoryUser.save(newUser);
+                });
+    }
 
     private Set<String> extractPaths(RequestMappingInfo mapping) {
         return mapping.getPathPatternsCondition()
