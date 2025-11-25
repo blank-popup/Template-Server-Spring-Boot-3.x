@@ -33,8 +33,8 @@ public class ControllerTenant {
 
     @EndpointOrder(value0 = 700, value1 = 200)
     @GetMapping
-    public ResponseEntity<?> getTenants() {
-        GlobalResponse<?> response = serviceTenant.getTenants();
+    public ResponseEntity<?> getListTenant() {
+        GlobalResponse<?> response = serviceTenant.getListTenant();
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

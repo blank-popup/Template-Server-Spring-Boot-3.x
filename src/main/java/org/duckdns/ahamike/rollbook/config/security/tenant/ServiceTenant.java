@@ -45,7 +45,7 @@ public class ServiceTenant {
         );
     }
 
-    public GlobalResponse<List<EntityTenant>> getTenants() {
+    public GlobalResponse<List<EntityTenant>> getListTenant() {
         List<EntityTenant> response = repositoryTenant.findByIsEnabled(true);
 
         ReturnCode code = ReturnCode.OK;
