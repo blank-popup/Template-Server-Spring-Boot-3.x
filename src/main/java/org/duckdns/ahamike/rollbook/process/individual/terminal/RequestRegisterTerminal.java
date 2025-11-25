@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.terminal;
+package org.duckdns.ahamike.rollbook.process.individual.terminal;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

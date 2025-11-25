@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.attendance;
+package org.duckdns.ahamike.rollbook.process.individual.attendance;
 
 import java.time.LocalDate;
 

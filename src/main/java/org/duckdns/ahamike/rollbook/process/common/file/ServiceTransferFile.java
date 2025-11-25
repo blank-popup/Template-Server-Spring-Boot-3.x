@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.file;
+package org.duckdns.ahamike.rollbook.process.common.file;
 
 import java.io.File;
 import java.io.FileInputStream;

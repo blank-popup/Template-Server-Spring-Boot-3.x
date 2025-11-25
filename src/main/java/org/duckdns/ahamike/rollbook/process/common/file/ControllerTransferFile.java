@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.file;
+package org.duckdns.ahamike.rollbook.process.common.file;
 
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;

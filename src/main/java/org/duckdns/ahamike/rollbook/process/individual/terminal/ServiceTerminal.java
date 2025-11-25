@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.terminal;
+package org.duckdns.ahamike.rollbook.process.individual.terminal;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.exception.ExceptionBusiness;
