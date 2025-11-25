@@ -46,6 +46,9 @@ public class EntityGroup extends AuditableCU {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tb_group_role",

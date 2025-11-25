@@ -39,6 +39,9 @@ public class EntityTerminal extends AuditableCU {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     public EntityTerminal(String name) {
         this.name = name;
     }

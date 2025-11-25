@@ -39,6 +39,9 @@ public class EntityRole extends AuditableCU {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     public EntityRole(String name) {
         this.name = name;
     }
