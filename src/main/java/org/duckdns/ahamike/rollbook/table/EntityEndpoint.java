@@ -72,7 +72,10 @@ public class EntityEndpoint extends AuditableCU {
     }
 
     public EntityEndpoint(String name, String method, String path, String parameter) {
-        this(name, method, path, parameter, null, null);
+        this.name = name;
+        this.method = method;
+        this.path = path;
+        this.parameter = parameter;
     }
 
     public void addRole(EntityRole role) {
