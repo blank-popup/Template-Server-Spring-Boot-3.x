@@ -34,8 +34,4 @@ public class EntityTerminal extends AuditableCU {
 
     @Column(name = "description")
     private String description;
-
-    public EntityTerminal(String name) {
-        this.name = name;
-    }
 }

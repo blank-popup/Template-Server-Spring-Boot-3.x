@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +22,9 @@ public class ControllerGroup {
     private final ServiceGroup serviceGroup;
 
     @EndpointOrder(value0 = 300, value1 = 100)
-    @PostMapping("/{groupName}")
-    public ResponseEntity<?> registerGroup(@PathVariable(name = "groupName") String groupName) {
-        GlobalResponse<?> response = serviceGroup.registerGroup(groupName);
+    @PostMapping
+    public ResponseEntity<?> registerGroup(@RequestBody RequestRegisterGroup request) {
+        GlobalResponse<?> response = serviceGroup.registerGroup(request);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

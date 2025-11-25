@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +22,9 @@ public class ControllerRole {
     private final ServiceRole serviceRole;
 
     @EndpointOrder(value0 = 200, value1 = 100)
-    @PostMapping("/{roleName}")
-    public ResponseEntity<?> registerRole(@PathVariable(name = "roleName") String roleName) {
-        GlobalResponse<?> response = serviceRole.registerRole(roleName);
+    @PostMapping
+    public ResponseEntity<?> registerRole(@RequestBody RequestRegisterRole request) {
+        GlobalResponse<?> response = serviceRole.registerRole(request);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

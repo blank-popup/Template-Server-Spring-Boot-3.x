@@ -50,8 +50,9 @@ public class EntityGroup extends AuditableCU {
     )
     private Set<EntityRole> roles = new HashSet<>();
 
-    public EntityGroup(String name) {
+    public EntityGroup(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     public void addRole(EntityRole role) {

@@ -17,12 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class ServiceRole {
     private final RepositoryRole repositoryRole;
 
-    public GlobalResponse<EntityRole> registerRole(String roleName) {
-        if (repositoryRole.existsByName(roleName) == true) {
+    public GlobalResponse<EntityRole> registerRole(RequestRegisterRole request) {
+        if (repositoryRole.existsByName(request.getName()) == true) {
             throw new ExceptionBusiness(ReturnCode.DATA_ALREADY_EXISTS, "Role already exists");
         }
 
-        EntityRole entity = new EntityRole(roleName);
+        EntityRole entity = new EntityRole(
+                request.getName(),
+                request.getDescription()
+        );
         EntityRole response = repositoryRole.save(entity);
 
         ReturnCode code = ReturnCode.OK;

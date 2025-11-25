@@ -17,12 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ServiceGroup {
     private final RepositoryGroup repositoryGroup;
 
-    public GlobalResponse<EntityGroup> registerGroup(String groupName) {
-        if (repositoryGroup.existsByName(groupName) == true) {
+    public GlobalResponse<EntityGroup> registerGroup(RequestRegisterGroup request) {
+        if (repositoryGroup.existsByName(request.getName()) == true) {
             throw new ExceptionBusiness(ReturnCode.DATA_ALREADY_EXISTS, "Group already exists");
         }
 
-        EntityGroup entity = new EntityGroup(groupName);
+        EntityGroup entity = new EntityGroup(
+                request.getName(),
+                request.getDescription());
         EntityGroup response = repositoryGroup.save(entity);
 
         ReturnCode code = ReturnCode.OK;

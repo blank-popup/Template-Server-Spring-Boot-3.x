@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +22,9 @@ public class ControllerTerminal {
     private final ServiceTerminal serviceTerminal;
 
     @EndpointOrder(value0 = 100100, value1 = 100)
-    @PostMapping("/{terminalName}")
-    public ResponseEntity<?> registerTerminal(@PathVariable(name = "terminalName") String terminalName) {
-        GlobalResponse<?> response = serviceTerminal.registerTerminal(terminalName);
+    @PostMapping
+    public ResponseEntity<?> registerTerminal(@RequestBody RequestRegisterTerminal request) {
+        GlobalResponse<?> response = serviceTerminal.registerTerminal(request);
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

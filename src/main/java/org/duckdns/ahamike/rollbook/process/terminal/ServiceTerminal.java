@@ -17,12 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class ServiceTerminal {
     private final RepositoryTerminal repositoryTerminal;
 
-    public GlobalResponse<EntityTerminal> registerTerminal(String terminalName) {
-        if (repositoryTerminal.existsByName(terminalName) == true) {
+    public GlobalResponse<EntityTerminal> registerTerminal(RequestRegisterTerminal request) {
+        if (repositoryTerminal.existsByName(request.getName()) == true) {
             throw new ExceptionBusiness(ReturnCode.DATA_ALREADY_EXISTS, "Terminal already exists");
         }
 
-        EntityTerminal entity = new EntityTerminal(terminalName);
+        EntityTerminal entity = new EntityTerminal(
+                request.getName(),
+                request.getDescription()    
+        );
         EntityTerminal response = repositoryTerminal.save(entity);
 
         ReturnCode code = ReturnCode.OK;
