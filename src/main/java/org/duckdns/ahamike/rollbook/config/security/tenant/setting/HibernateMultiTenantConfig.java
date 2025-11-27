@@ -40,8 +40,7 @@ public class HibernateMultiTenantConfig {
         Properties properties = new Properties();
         properties.putAll(jpaProperties.getProperties());
 
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
-        properties.put("hibernate.hbm2ddl.auto", "update");
+       properties.put("hibernate.hbm2ddl.auto", "update");
 
         properties.put("hibernate.multiTenancy", "DISCRIMINATOR");
         properties.put("hibernate.tenant_identifier_resolver", tenantIdentifierResolver);
