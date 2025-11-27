@@ -1,7 +1,7 @@
 package org.duckdns.ahamike.rollbook.config.security.user;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class RequestSignUp {
     private String name;
     private String email;
     private String phone;
-    private List<String> roles = new ArrayList<>();
+    private Set<String> roles = new HashSet<>();
 }
