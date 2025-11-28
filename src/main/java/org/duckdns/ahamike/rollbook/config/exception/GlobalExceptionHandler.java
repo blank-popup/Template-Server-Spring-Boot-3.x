@@ -12,6 +12,7 @@ import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceApiHistory;
 import org.duckdns.ahamike.rollbook.process.GlobalException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,6 +100,14 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest httpServletRequest) {
         ReturnCode code = ReturnCode.ACCESS_DENIED;
+        ResponseEntity<?> response = buildResponseEntity(code, ex, httpServletRequest);
+        logHistory(response);
+        return response;
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest httpServletRequest) {
+        ReturnCode code = ReturnCode.DATA_INTEGRITY_VIOLATION;
         ResponseEntity<?> response = buildResponseEntity(code, ex, httpServletRequest);
         logHistory(response);
         return response;

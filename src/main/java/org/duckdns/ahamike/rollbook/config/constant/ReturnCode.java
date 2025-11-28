@@ -37,6 +37,7 @@ public enum ReturnCode {
     USERNAME_NOT_FOUND("USERNAME_NOT_FOUND", "Username not found", HttpStatus.UNAUTHORIZED),
     INSUFFICIENT_AUTHENTICATION("INSUFFICIENT_AUTHENTICATION", "Insufficient authentication", HttpStatus.UNAUTHORIZED),
     ACCESS_DENIED("ACCESS_DENIED", "Access denied", HttpStatus.FORBIDDEN),
+    DATA_INTEGRITY_VIOLATION("DATA_INTEGRITY_VIOLATION", "Data integrity violation", HttpStatus.BAD_REQUEST),
     NOT_SIGNED_IN("NOT_SIGNED_IN", "Not signed in", HttpStatus.BAD_REQUEST),
     // NoResourceFoundException - 404 Not Found
     NOT_FOUND("NOT_FOUND", "Not found", HttpStatus.NOT_FOUND),
