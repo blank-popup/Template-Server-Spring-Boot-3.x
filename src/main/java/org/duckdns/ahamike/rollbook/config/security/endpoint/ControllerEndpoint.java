@@ -23,6 +23,7 @@ public class ControllerEndpoint {
     @EndpointOrder(value0 = 500, value1 = 100)
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshCache() {
+        cacheEndpoint.scanEndpoints();
         Map<String, InfoEndpoint> response = cacheEndpoint.refreshCache();
 
         ReturnCode code = ReturnCode.OK;
