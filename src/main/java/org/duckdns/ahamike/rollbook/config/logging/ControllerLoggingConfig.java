@@ -99,22 +99,22 @@ public class ControllerLoggingConfig {
     @PostMapping("/level/{loggerName}")
     public ResponseEntity<?> setLoggingLevel(@PathVariable(name = "loggerName") String loggerName, @RequestParam(name = "level") String level) {
         if ("trace".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.TRACE);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.TRACE);
         }
         else if ("debug".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.DEBUG);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.DEBUG);
         }
         else if ("info".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.INFO);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.INFO);
          }
         else if ("warn".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.WARN);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.WARN);
         }
         else if ("error".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.ERROR);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.ERROR);
         }
         else {
-            serviceLoggingConfig.setLogLevel(loggerName, LogLevel.INFO);
+            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.INFO);
         }
 
         return getLoggingLevel(loggerName);
@@ -125,7 +125,7 @@ public class ControllerLoggingConfig {
     public ResponseEntity<?> getLoggingLevel(@PathVariable(name = "loggerName") String loggerName) {
         ResponseLoggingLevel response = new ResponseLoggingLevel();
         response.setLoggerName(loggerName);
-        response.setLevel(serviceLoggingConfig.getLogLevel(loggerName).toString());
+        response.setLevel(serviceLoggingConfig.getLoggingLevel(loggerName).toString());
 
         ReturnCode code = ReturnCode.OK;
         return buildResponseEntity(code, response);
@@ -138,7 +138,7 @@ public class ControllerLoggingConfig {
             throw new ExceptionBusiness(ReturnCode.EMPTY_ARRAY, "Input array is empty");
         }
         for (RequestLoggingLevel item : levels) {
-            serviceLoggingConfig.setLogLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));
+            serviceLoggingConfig.setLoggingLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));
         }
 
         return getAllLoggingLevels();
@@ -151,7 +151,7 @@ public class ControllerLoggingConfig {
         for (String loggerName : loggerNames) {
             ResponseLoggingLevel item = new ResponseLoggingLevel();
             item.setLoggerName(loggerName);
-            item.setLevel(serviceLoggingConfig.getLogLevel(loggerName).toString());
+            item.setLevel(serviceLoggingConfig.getLoggingLevel(loggerName).toString());
             response.add(item);
         }
 

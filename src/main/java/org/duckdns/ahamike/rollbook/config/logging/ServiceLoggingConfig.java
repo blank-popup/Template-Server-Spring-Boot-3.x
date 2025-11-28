@@ -16,14 +16,6 @@ public class ServiceLoggingConfig {
 
     private final LoggingSystem loggingSystem;
 
-    public void setLogLevel(String loggerName, LogLevel level) {
-        loggingSystem.setLogLevel(loggerName, level);
-    }
-
-    public LogLevel getLogLevel(String loggerName) {
-        return loggingSystem.getLoggerConfiguration(loggerName).getEffectiveLevel();
-    }
-
     private final AtomicBoolean isLoggingRequest = new AtomicBoolean(true);
     private final AtomicBoolean isLoggingResponse = new AtomicBoolean(true);
     private final AtomicBoolean isLoggingException = new AtomicBoolean(true);
@@ -75,5 +67,13 @@ public class ServiceLoggingConfig {
 
     public boolean isEnabledDatabase() {
         return isLoggingDatabase.get();
+    }
+
+    public void setLoggingLevel(String loggerName, LogLevel level) {
+        loggingSystem.setLogLevel(loggerName, level);
+    }
+
+    public LogLevel getLoggingLevel(String loggerName) {
+        return loggingSystem.getLoggerConfiguration(loggerName).getEffectiveLevel();
     }
 }
