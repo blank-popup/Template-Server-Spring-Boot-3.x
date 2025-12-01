@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.individual.terminal;
+package org.duckdns.ahamike.rollbook.process.project.terminal;
 
 import java.util.List;
 

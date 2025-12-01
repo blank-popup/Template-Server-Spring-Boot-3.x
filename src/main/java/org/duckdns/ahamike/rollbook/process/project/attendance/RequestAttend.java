@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.individual.attendance;
+package org.duckdns.ahamike.rollbook.process.project.attendance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

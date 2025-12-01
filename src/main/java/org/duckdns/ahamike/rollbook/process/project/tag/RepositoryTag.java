@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.individual.tag;
+package org.duckdns.ahamike.rollbook.process.project.tag;
 
 import java.util.List;
 

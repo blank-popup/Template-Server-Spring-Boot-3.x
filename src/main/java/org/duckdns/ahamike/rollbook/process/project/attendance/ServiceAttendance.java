@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.process.individual.attendance;
+package org.duckdns.ahamike.rollbook.process.project.attendance;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,8 +8,8 @@ import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.exception.ExceptionBusiness;
 import org.duckdns.ahamike.rollbook.config.security.user.RepositoryUser;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
-import org.duckdns.ahamike.rollbook.process.individual.tag.RepositoryTag;
-import org.duckdns.ahamike.rollbook.process.individual.terminal.RepositoryTerminal;
+import org.duckdns.ahamike.rollbook.process.project.tag.RepositoryTag;
+import org.duckdns.ahamike.rollbook.process.project.terminal.RepositoryTerminal;
 import org.duckdns.ahamike.rollbook.table.EntityAttendance;
 import org.duckdns.ahamike.rollbook.table.EntityTag;
 import org.duckdns.ahamike.rollbook.table.EntityTerminal;
