@@ -12,7 +12,7 @@ import org.duckdns.ahamike.rollbook.config.security.UserDetailsCustom;
 import org.duckdns.ahamike.rollbook.config.security.UserDetailsServiceCustom;
 import org.duckdns.ahamike.rollbook.config.security.role.RepositoryRole;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
-import org.duckdns.ahamike.rollbook.process.individual.tag.RepositoryTag;
+import org.duckdns.ahamike.rollbook.process.project.tag.RepositoryTag;
 import org.duckdns.ahamike.rollbook.table.EntityRole;
 import org.duckdns.ahamike.rollbook.table.EntityTag;
 import org.duckdns.ahamike.rollbook.table.EntityUser;
