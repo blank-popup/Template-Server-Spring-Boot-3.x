@@ -120,7 +120,7 @@ public class ControllerLoggingConfig {
         return getLoggingLevel(loggerName);
     }
 
-    @EndpointOrder(value0 = 600, value1 = 2300)
+    @EndpointOrder(value0 = 600, value1 = 2200)
     @GetMapping("/level/{loggerName}")
     public ResponseEntity<?> getLoggingLevel(@PathVariable(name = "loggerName") String loggerName) {
         ResponseLoggingLevel response = new ResponseLoggingLevel();
