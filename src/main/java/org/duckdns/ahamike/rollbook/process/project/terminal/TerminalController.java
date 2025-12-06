@@ -25,6 +25,7 @@ public class TerminalController {
     @PostMapping
     public ResponseEntity<?> registerTerminal(@RequestBody TerminalDomain request) {
         GlobalResponse<?> response = terminalService.registerTerminal(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -34,6 +35,7 @@ public class TerminalController {
     @DeleteMapping("/{terminalId}")
     public ResponseEntity<?> removeTerminal(@PathVariable(name = "terminalId") Long terminalId) {
         GlobalResponse<?> response = terminalService.removeTerminal(terminalId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

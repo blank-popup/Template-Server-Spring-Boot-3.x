@@ -35,12 +35,8 @@ public class TenantService {
         TenantDomain response = tenantMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<List<TenantDomain>> getList() {
@@ -48,12 +44,8 @@ public class TenantService {
         List<TenantDomain> response = tenantMapper.toDomainList(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<TenantDomain> removeTenant(Long tenantId) {
@@ -65,11 +57,7 @@ public class TenantService {
         TenantDomain response = tenantMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 }

@@ -47,12 +47,8 @@ public class MenuService {
         MenuDomain response = menuMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<List<ResponseGetRecursiveMenu>> getRecursiveMenu(Long userId) {
@@ -73,12 +69,8 @@ public class MenuService {
         List<ResponseGetRecursiveMenu> response = buildMenuTree(menus);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     private List<ResponseGetRecursiveMenu> buildMenuTree(List<MenuEntity> menus) {

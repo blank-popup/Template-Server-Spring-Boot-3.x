@@ -24,6 +24,7 @@ public class SecurityController {
     @PostMapping("/endpoint/{endpointId}/role/{roleId}")
     public ResponseEntity<?> addRoleToEndpoint(@PathVariable(name = "endpointId") Long endpointId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.addRoleToEndpoint(endpointId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -33,6 +34,7 @@ public class SecurityController {
     @DeleteMapping("/endpoint/{endpointId}/role/{roleId}")
     public ResponseEntity<?> removeRoleFromEndpoint(@PathVariable(name = "endpointId") Long endpointId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.removeRoleFromEndpoint(endpointId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -42,6 +44,7 @@ public class SecurityController {
     @PostMapping("/user/{userId}/role/{roleId}")
     public ResponseEntity<?> addRoleToUser(@PathVariable(name = "userId") Long userId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.addRoleToUser(userId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -51,6 +54,7 @@ public class SecurityController {
     @DeleteMapping("/user/{userId}/role/{roleId}")
     public ResponseEntity<?> removeRoleFromUser(@PathVariable(name = "userId") Long userId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.removeRoleFromUser(userId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -60,6 +64,7 @@ public class SecurityController {
     @PostMapping("/user/{userId}/group/{groupId}")
     public ResponseEntity<?> addGroupToUser(@PathVariable(name = "userId") Long userId, @PathVariable(name = "groupId") Long groupId) {
         GlobalResponse<?> response = securityService.addGroupToUser(userId, groupId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -69,6 +74,7 @@ public class SecurityController {
     @DeleteMapping("/user/{userId}/group/{groupId}")
     public ResponseEntity<?> removeGroupFromUser(@PathVariable(name = "userId") Long userId, @PathVariable(name = "groupId") Long groupId) {
         GlobalResponse<?> response = securityService.removeGroupFromUser(userId, groupId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -78,6 +84,7 @@ public class SecurityController {
     @PostMapping("/group/{groupId}/role/{roleId}")
     public ResponseEntity<?> addRoleToGroup(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.addRoleToGroup(groupId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -87,6 +94,7 @@ public class SecurityController {
     @DeleteMapping("/group/{groupId}/role/{roleId}")
     public ResponseEntity<?> removeRoleFromGroup(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = securityService.removeRoleFromGroup(groupId, roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

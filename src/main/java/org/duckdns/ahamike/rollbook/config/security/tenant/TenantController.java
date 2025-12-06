@@ -26,6 +26,7 @@ public class TenantController {
     @PostMapping
     public ResponseEntity<?> registerTenant(@RequestBody TenantDomain request) {
         GlobalResponse<?> response = tenantService.registerTenant(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -35,6 +36,7 @@ public class TenantController {
     @GetMapping
     public ResponseEntity<?> getList() {
         GlobalResponse<?> response = tenantService.getList();
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -44,6 +46,7 @@ public class TenantController {
     @DeleteMapping("/{tenantId}")
     public ResponseEntity<?> removeTenant(@PathVariable(name = "tenantId") Long tenantId) {
         GlobalResponse<?> response = tenantService.removeTenant(tenantId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

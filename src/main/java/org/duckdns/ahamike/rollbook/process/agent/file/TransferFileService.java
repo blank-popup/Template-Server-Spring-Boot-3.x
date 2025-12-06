@@ -96,12 +96,8 @@ public class TransferFileService {
             TransferFileEntity response = transferFileRepository.save(transferFile);
 
             ReturnCode code = ReturnCode.OK;
-            return new GlobalResponse<>(
-                    code.getCode(),
-                    code.getMessage(),
-                    code.getHttpStatus(),
-                    response
-            );
+
+            return new GlobalResponse<>(code, response);
         } catch (Exception e) {
             log.warn("Exception in save file info to DB: {}", e.getMessage());
 

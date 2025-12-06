@@ -25,6 +25,7 @@ public class GroupController {
     @PostMapping
     public ResponseEntity<?> registerGroup(@RequestBody GroupDomain request) {
         GlobalResponse<?> response = groupService.registerGroup(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -34,6 +35,7 @@ public class GroupController {
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> removeGroup(@PathVariable(name = "groupId") Long groupId) {
         GlobalResponse<?> response = groupService.removeGroup(groupId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

@@ -25,6 +25,7 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<?> registerRole(@RequestBody RoleDomain request) {
         GlobalResponse<?> response = roleService.registerRole(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -34,6 +35,7 @@ public class RoleController {
     @DeleteMapping("/{roleId}")
     public ResponseEntity<?> removeRole(@PathVariable(name = "roleId") Long roleId) {
         GlobalResponse<?> response = roleService.removeRole(roleId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

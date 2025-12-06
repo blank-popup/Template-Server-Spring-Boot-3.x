@@ -40,12 +40,8 @@ public class SecurityService {
         EndpointEntity response = endpointRepository.save(endpoint);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<EndpointEntity> removeRoleFromEndpoint(Long endpointId, Long roleId) {
@@ -61,12 +57,8 @@ public class SecurityService {
         EndpointEntity response = endpointRepository.save(endpoint);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<UserEntity> addRoleToUser(Long userId, Long roleId) {
@@ -82,12 +74,8 @@ public class SecurityService {
         UserEntity response = userRepository.save(user);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<UserEntity> removeRoleFromUser(Long userId, Long roleId) {
@@ -103,12 +91,8 @@ public class SecurityService {
         UserEntity response = userRepository.save(user);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<UserEntity> addGroupToUser(Long userId, Long groupId) {
@@ -124,12 +108,8 @@ public class SecurityService {
         UserEntity response = userRepository.save(user);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<UserEntity> removeGroupFromUser(Long userId, Long groupId) {
@@ -145,12 +125,8 @@ public class SecurityService {
         UserEntity response = userRepository.save(user);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<GroupEntity> addRoleToGroup(Long groupId, Long roleId) {
@@ -166,12 +142,8 @@ public class SecurityService {
         GroupEntity response = groupRepository.save(group);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<GroupEntity> removeRoleFromGroup(Long groupId, Long roleId) {
@@ -187,11 +159,7 @@ public class SecurityService {
         GroupEntity response = groupRepository.save(group);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 }

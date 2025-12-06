@@ -32,6 +32,7 @@ public class TransferFileController {
         @RequestPart(value = "description", required = false) String description,
         @RequestPart(value = "file", required = true) MultipartFile file) {
         GlobalResponse<?> response = transferFileService.upload(directory0, directory1, directory2, description, file);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

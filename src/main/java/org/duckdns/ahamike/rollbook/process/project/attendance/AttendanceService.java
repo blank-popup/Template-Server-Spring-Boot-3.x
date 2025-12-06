@@ -61,12 +61,8 @@ public class AttendanceService {
         AttendanceEntity response = attendanceRepository.save(entity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<List<ResponseGetAttendance>> getAttenders(Long idUser, LocalDate from, LocalDate to) {
@@ -76,12 +72,8 @@ public class AttendanceService {
         List<ResponseGetAttendance> response = attendanceRepository.findDailyTagAttendance(idUser, start, end);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     private LocalDateTime getStartOfDay(LocalDate date) {

@@ -97,12 +97,8 @@ public class UserService {
         UserEntity response = userRepository.save(entity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<ResponseSignIn> signIn(RequestSignIn request) {
@@ -137,12 +133,8 @@ public class UserService {
         response.setRoles(userDetails.getRoles());
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<ResponseSignIn> signOut(HttpServletRequest request) {
@@ -167,12 +159,8 @@ public class UserService {
 
         if (removed == true) {
             ReturnCode code = ReturnCode.OK;
-            return new GlobalResponse<>(
-                    code.getCode(),
-                    code.getMessage(),
-                    code.getHttpStatus(),
-                    null
-            );
+
+            return new GlobalResponse<>(code, null);
         }
         else {
             throw new BusinessException(ReturnCode.FAIL_TO_REMOVE, "Fail to remove user");
@@ -187,11 +175,7 @@ public class UserService {
         List<UserEntity> entityList = userRepository.findByNotNullUsernameNameTag(username, name, tag);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                entityList
-        );
+
+        return new GlobalResponse<>(code, entityList);
     }
 }

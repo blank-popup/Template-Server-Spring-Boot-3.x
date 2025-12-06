@@ -28,6 +28,7 @@ public class AttendanceController {
     @PostMapping
     public ResponseEntity<?> saveAttender(@RequestBody RequestAttend request) {
         GlobalResponse<?> response = attendanceService.saveAttender(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -37,6 +38,7 @@ public class AttendanceController {
     @GetMapping
     public ResponseEntity<?> getAttenders(@RequestParam(name = "userId", required = false) Long userId, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) LocalDate from, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) LocalDate to) {
         GlobalResponse<?> response = attendanceService.getAttenders(userId, from, to);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

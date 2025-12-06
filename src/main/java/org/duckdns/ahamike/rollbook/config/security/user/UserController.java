@@ -26,6 +26,7 @@ public class UserController {
     @PostMapping("/user/signup")
     public ResponseEntity<?> signUp(@RequestBody RequestSignUp request) {
         GlobalResponse<?> response = userService.signUp(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -35,6 +36,7 @@ public class UserController {
     @PostMapping("/user/signin")
     public ResponseEntity<?> signIn(@RequestBody RequestSignIn request) {
         GlobalResponse<?> response = userService.signIn(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -44,6 +46,7 @@ public class UserController {
     @PostMapping("/user/signout")
     public ResponseEntity<?> signOut(HttpServletRequest request) {
         GlobalResponse<?> response = userService.signOut(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -53,6 +56,7 @@ public class UserController {
     @GetMapping("/admin/user")
     public ResponseEntity<?> getUsers(@RequestParam(name = "username", required = false) String username, @RequestParam(name = "name", required = false) String name, @RequestParam(name = "tag", required = false) String tag) {
         GlobalResponse<?> response = userService.getUsers(username, name, tag);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

@@ -29,12 +29,8 @@ public class RoleService {
         RoleDomain response = roleMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<RoleDomain> removeRole(Long roleId) {
@@ -46,11 +42,7 @@ public class RoleService {
         RoleDomain response = roleMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 }

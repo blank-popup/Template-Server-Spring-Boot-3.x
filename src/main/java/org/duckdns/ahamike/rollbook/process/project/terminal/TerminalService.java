@@ -29,12 +29,8 @@ public class TerminalService {
         TerminalEntity response = terminalRepository.save(entity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+ 
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<TerminalEntity> removeTerminal(Long terminalId) {
@@ -44,11 +40,7 @@ public class TerminalService {
         terminalRepository.deleteById(terminalId);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                null
-        );
+
+        return new GlobalResponse<>(code, null);
     }
 }

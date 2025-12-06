@@ -24,10 +24,6 @@ public class GlobalResponse<T> {
     private Long dataCount;
     private T data;
 
-    public GlobalResponse(String code, String message, HttpStatus status, T data) {
-        this(code, message, null, status, data);
-    }
-
     public GlobalResponse(String code, String message, String detail, HttpStatus httpStatus, T data) {
         this.code = code;
         this.message = message;
@@ -37,6 +33,14 @@ public class GlobalResponse<T> {
         this.httpStatusPhrase = httpStatus.getReasonPhrase();
         this.dataCount = calculateDataCount(data);
         this.data = data;
+    }
+
+    public GlobalResponse(String code, String message, HttpStatus httpStatus, T data) {
+        this(code, message, null, httpStatus, data);
+    }
+
+    public GlobalResponse(ReturnCode returnCode, T data) {
+        this(returnCode.getCode(), returnCode.getMessage(), null, returnCode.getHttpStatus(), data);
     }
 
     private Long calculateDataCount(T data) {

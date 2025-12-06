@@ -160,12 +160,7 @@ public class LoggingConfigController {
     }
 
     private ResponseEntity<?> buildResponseEntity(ReturnCode code, Object response) {
-        GlobalResponse<?> result = new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+        GlobalResponse<?> result = new GlobalResponse<>(code, response);
 
         return ResponseEntity
                 .status(code.getHttpStatus())

@@ -26,6 +26,7 @@ public class MenuController {
     @PostMapping
     public ResponseEntity<?> registerMenu(@RequestBody MenuDomain request) {
         GlobalResponse<?> response = menuService.registerMenu(request);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);
@@ -35,6 +36,7 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<?> getRecursiveMenu(@RequestParam(name = "userId", required = true) Long userId) {
         GlobalResponse<?> response = menuService.getRecursiveMenu(userId);
+
         return ResponseEntity
                 .status(response.getHttpStatus())
                 .body(response);

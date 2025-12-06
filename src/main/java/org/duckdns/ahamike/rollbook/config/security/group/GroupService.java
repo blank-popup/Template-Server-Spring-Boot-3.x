@@ -29,12 +29,8 @@ public class GroupService {
         GroupDomain response = groupMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 
     public GlobalResponse<GroupDomain> removeGroup(Long groupId) {
@@ -46,11 +42,7 @@ public class GroupService {
         GroupDomain response = groupMapper.toDomain(responseEntity);
 
         ReturnCode code = ReturnCode.OK;
-        return new GlobalResponse<>(
-                code.getCode(),
-                code.getMessage(),
-                code.getHttpStatus(),
-                response
-        );
+
+        return new GlobalResponse<>(code, response);
     }
 }
