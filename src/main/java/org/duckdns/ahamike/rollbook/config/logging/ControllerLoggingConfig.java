@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.ExceptionBusiness;
+import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
 import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.boot.logging.LogLevel;
@@ -135,7 +135,7 @@ public class ControllerLoggingConfig {
     @PostMapping("/levels")
     public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<RequestLoggingLevel> levels) {
         if (levels.size() == 0) {
-            throw new ExceptionBusiness(ReturnCode.EMPTY_ARRAY, "Input array is empty");
+            throw new BusinessException(ReturnCode.EMPTY_ARRAY, "Input array is empty");
         }
         for (RequestLoggingLevel item : levels) {
             serviceLoggingConfig.setLoggingLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));

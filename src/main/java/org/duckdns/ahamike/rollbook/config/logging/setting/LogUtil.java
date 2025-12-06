@@ -7,6 +7,7 @@ import java.time.ZoneId;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.duckdns.ahamike.rollbook.config.context.SpringContext;
 import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.duckdns.ahamike.rollbook.util.json.JsonUtil;
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LogUtil {
+
+    private static final String requestTimeName = SpringContext.getRequestTimeName();
+
     public static LogParameter buildLogParameter(ServiceApiHistory serviceApiHistory, ServiceLoggingConfig serviceLoggingConfig, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize) { 
         LogParameter logParameter = new LogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
@@ -34,7 +38,7 @@ public class LogUtil {
         return logParameter;
     }
     
-    public static LogParameter setLogPreParameter(LogParameter logParameter, HttpServletRequest request, InfoRequestParam param) {
+    public static LogParameter setLogPreParameter(LogParameter logParameter, HttpServletRequest request, RequestParamInfo param) {
         String method = request.getMethod();
         String contextPath = request.getContextPath();
         String uri = request.getRequestURI();
@@ -151,7 +155,7 @@ public class LogUtil {
     }
 
     public static Long getDuration(HttpServletRequest request, LocalDateTime createdAt) {
-        Long timeRequest = (Long) request.getAttribute("timeRequest");
+        Long timeRequest = (Long) request.getAttribute(requestTimeName);
         Long timeResponse = createdAt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         Long duration = (timeRequest != null) ? (timeResponse - timeRequest) : null;
 

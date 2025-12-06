@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.duckdns.ahamike.rollbook.table.EntityGroup;
-import org.duckdns.ahamike.rollbook.table.EntityRole;
-import org.duckdns.ahamike.rollbook.table.EntityUser;
+import org.duckdns.ahamike.rollbook.table.GroupEntity;
+import org.duckdns.ahamike.rollbook.table.RoleEntity;
+import org.duckdns.ahamike.rollbook.table.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,7 +72,7 @@ public class UserDetailsCustom implements UserDetails {
         return isEnabled;
     }
 
-    public UserDetailsCustom(EntityUser user) {
+    public UserDetailsCustom(UserEntity user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
@@ -85,16 +85,16 @@ public class UserDetailsCustom implements UserDetails {
         else {
             this.tag = null;
         }
-        for (EntityRole role : user.getRoles()) {
+        for (RoleEntity role : user.getRoles()) {
             if (this.roles.contains(role.getName()) == false) {
                 this.roles.add(role.getName());
             }
         }
-        for (EntityGroup group : user.getGroups()) {
+        for (GroupEntity group : user.getGroups()) {
             if (this.groups.contains(group.getName()) == false) {
                 this.groups.add(group.getName());
             }
-            for (EntityRole role : group.getRoles()) {
+            for (RoleEntity role : group.getRoles()) {
                 if (this.roles.contains(role.getName()) == false) {
                     this.roles.add(role.getName());
                 }

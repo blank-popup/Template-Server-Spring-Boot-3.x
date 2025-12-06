@@ -2,6 +2,7 @@ package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.io.IOException;
 
+import org.duckdns.ahamike.rollbook.config.context.SpringContext;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import jakarta.servlet.Filter;
@@ -15,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RequestCachingFilter implements Filter {
 
+    private final String requestParamInfoName = SpringContext.getRequestParamInfoName();
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
@@ -23,8 +26,8 @@ public class RequestCachingFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         ContentCachingRequestWrapper cachingRequest = new ContentCachingRequestWrapper(request);
 
-        InfoRequestParam info = new InfoRequestParam();
-        request.setAttribute("InfoRequestParam", info);
+        RequestParamInfo info = new RequestParamInfo();
+        request.setAttribute(requestParamInfoName, info);
 
         chain.doFilter(cachingRequest, res);
     }

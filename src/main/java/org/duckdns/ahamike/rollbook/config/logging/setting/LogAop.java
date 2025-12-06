@@ -4,6 +4,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.duckdns.ahamike.rollbook.config.context.SpringContext;
 import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,9 @@ public class LogAop {
     @Value("${logging.limit.maxResponseBodySize}")
     private int maxResponseBodySize;
 
-    @Pointcut("execution(* org.duckdns.ahamike..Controller*.*(..))")
+    private final String requestParamInfoName = SpringContext.getRequestParamInfoName();
+
+    @Pointcut("execution(* org.duckdns.ahamike..*Controller.*(..))")
     public void controller() {}
 
     @Around("controller()")
@@ -48,8 +51,8 @@ public class LogAop {
         }
 
         HttpServletRequest request = attributes.getRequest();
-        Object infoObject = request.getAttribute("InfoRequestParam");
-        InfoRequestParam infoRequestParam = (InfoRequestParam) infoObject;
+        Object infoObject = request.getAttribute(requestParamInfoName);
+        RequestParamInfo requestParamInfo = (RequestParamInfo) infoObject;
 
         LogParameter logParameter = LogUtil.buildLogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
@@ -57,9 +60,9 @@ public class LogAop {
             maxRequestBodySize, maxResponseBodySize
         );
         Object requestObjectBody = LogUtil.getRequestObjectBody(joinPoint);
-        infoRequestParam.setRequestBody(requestObjectBody);
+        requestParamInfo.setRequestBody(requestObjectBody);
 
-        logParameter = LogUtil.setLogPreParameter(logParameter, request, infoRequestParam);
+        logParameter = LogUtil.setLogPreParameter(logParameter, request, requestParamInfo);
 
         if (serviceLoggingConfig.isEnabledRequest() == true) {
             log.info("\n[Request] username: {}"

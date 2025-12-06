@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationFilterCustom extends OncePerRequestFilter {
-    private final ProviderJwt providerJwt;
-    private final ProviderApiKey providerApiKey;
+    private final JwtProvider jwtProvider;
+    private final ApiKeyProvider apiKeyProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class AuthenticationFilterCustom extends OncePerRequestFilter {
             + "1. AuthenticationFilterCustom.doFilter\n"
             + "2. UserDetailsServiceCustom.loadUserByUsername\n"
             + "3. UserDetailsCustom.getRoles\n"
-            + "4. ServiceAuthorization.check"
+            + "4. AuthorizationService.check"
         );
 
         while (true) {
@@ -43,26 +43,26 @@ public class AuthenticationFilterCustom extends OncePerRequestFilter {
             }
             log.debug("[method] requestURI : [{}] {}", method, requestURI);
 
-            String jwt = providerJwt.resolveJwt((HttpServletRequest) request);
+            String jwt = jwtProvider.resolveJwt((HttpServletRequest) request);
             if (StringUtils.hasText(jwt)) {
-                Jws<Claims> information = providerJwt.getInformationOfJwt(jwt);
+                Jws<Claims> information = jwtProvider.getInformationOfJwt(jwt);
                 if (information == null) {
                     break;
                 }
 
-                Authentication authentication = providerJwt.getAuthentication(information, jwt);
+                Authentication authentication = jwtProvider.getAuthentication(information, jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 break;
             }
 
-            String apiKey = providerApiKey.resolveApiKey((HttpServletRequest) request);
+            String apiKey = apiKeyProvider.resolveApiKey((HttpServletRequest) request);
             if (StringUtils.hasText(apiKey)) {
-                List<String> information = providerApiKey.getInformationOfApiKey(apiKey);
+                List<String> information = apiKeyProvider.getInformationOfApiKey(apiKey);
                 if (information == null) {
                     break;
                 }
 
-                Authentication authentication = providerApiKey.getAuthentication(information, apiKey);
+                Authentication authentication = apiKeyProvider.getAuthentication(information, apiKey);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 break;
             }

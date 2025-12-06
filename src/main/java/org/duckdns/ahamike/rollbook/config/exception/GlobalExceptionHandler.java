@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
+import org.duckdns.ahamike.rollbook.config.context.SpringContext;
 import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
-import org.duckdns.ahamike.rollbook.config.logging.setting.InfoRequestParam;
+import org.duckdns.ahamike.rollbook.config.logging.setting.RequestParamInfo;
 import org.duckdns.ahamike.rollbook.config.logging.setting.LogParameter;
 import org.duckdns.ahamike.rollbook.config.logging.setting.LogUtil;
 import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceApiHistory;
@@ -57,8 +58,10 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
     @Value("${logging.limit.maxResponseBodySize}")
     private int maxResponseBodySize;
 
-    @ExceptionHandler(ExceptionBusiness.class)
-    public ResponseEntity<?> handleExceptionBusiness(ExceptionBusiness ex, HttpServletRequest httpServletRequest) {
+    private final String requestParamInfoName = SpringContext.getRequestParamInfoName();
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> handleExceptionBusiness(BusinessException ex, HttpServletRequest httpServletRequest) {
         ReturnCode code = ex.getErrorCode();
         ResponseEntity<?> response = buildResponseEntity(code, ex, httpServletRequest);
         logHistory(response);
@@ -217,8 +220,8 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
         }
 
         HttpServletRequest request = attributes.getRequest();
-        Object infoObject = request.getAttribute("InfoRequestParam");
-        InfoRequestParam infoRequestParam = (InfoRequestParam) infoObject;
+        Object infoObject = request.getAttribute(requestParamInfoName);
+        RequestParamInfo requestParamInfo = (RequestParamInfo) infoObject;
 
         LogParameter logParameter = LogUtil.buildLogParameter(
             serviceApiHistory, serviceLoggingConfig, mapper,
@@ -226,9 +229,9 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
             maxRequestBodySize, maxResponseBodySize
         );
         Object requestObjectBody = HOLDER_BODY.get();
-        infoRequestParam.setRequestBody(requestObjectBody);
+        requestParamInfo.setRequestBody(requestObjectBody);
 
-        logParameter = LogUtil.setLogPreParameter(logParameter, request, infoRequestParam);
+        logParameter = LogUtil.setLogPreParameter(logParameter, request, requestParamInfo);
         Integer httpStatusValue = response.getStatusCode().value();
         logParameter = LogUtil.setLogPostParameter(logParameter, request, response, httpStatusValue);
 
