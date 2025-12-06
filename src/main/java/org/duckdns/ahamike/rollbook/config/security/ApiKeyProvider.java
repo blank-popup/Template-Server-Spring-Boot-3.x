@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-import org.duckdns.ahamike.rollbook.config.redis.ServiceRedis;
+import org.duckdns.ahamike.rollbook.config.redis.RedisService;
 import org.duckdns.ahamike.rollbook.util.crypto.Crypto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +31,7 @@ public class ApiKeyProvider {
     @Value("${auth.apikey.delimiter}")
     private String delimiter;
 
-    private final ServiceRedis redisService;
+    private final RedisService redisService;
 
     @Value("${spring.data.redis.group0_apikey}")
     private String group0_apikey;

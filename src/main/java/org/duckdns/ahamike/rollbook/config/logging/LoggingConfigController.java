@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1/admin/logging")
 @Slf4j
-public class ControllerLoggingConfig {
+public class LoggingConfigController {
 
-    private final ServiceLoggingConfig serviceLoggingConfig;
+    private final LoggingConfigService loggingConfigService;
     private final List<String> loggerNames = Arrays.asList(
         "org.apache.catalina.startup.DigesterFactory",
         "org.apache.catalina.util.LifecycleBase",
@@ -54,29 +54,29 @@ public class ControllerLoggingConfig {
             @RequestParam(name = "databaseOnOff", required = false) String database) {
         if (request != null) {
             if ("on".equalsIgnoreCase(request)) {
-                serviceLoggingConfig.enableRequest();
+                loggingConfigService.enableRequest();
             } else if ("off".equalsIgnoreCase(request)) {
-                serviceLoggingConfig.disableRequest();
+                loggingConfigService.disableRequest();
             } else {
-                serviceLoggingConfig.enableRequest();
+                loggingConfigService.enableRequest();
             }
         }
         if (response != null) {
             if ("on".equalsIgnoreCase(response)) {
-                serviceLoggingConfig.enableResponse();
+                loggingConfigService.enableResponse();
             } else if ("off".equalsIgnoreCase(response)) {
-                serviceLoggingConfig.disableResponse();
+                loggingConfigService.disableResponse();
             } else {
-                serviceLoggingConfig.enableResponse();
+                loggingConfigService.enableResponse();
             }
         }
         if (database != null) {
             if ("on".equalsIgnoreCase(database)) {
-                serviceLoggingConfig.enableDatabase();
+                loggingConfigService.enableDatabase();
             } else if ("off".equalsIgnoreCase(database)) {
-                serviceLoggingConfig.disableDatabase();
+                loggingConfigService.disableDatabase();
             } else {
-                serviceLoggingConfig.enableDatabase();
+                loggingConfigService.enableDatabase();
             }
         }
 
@@ -86,10 +86,10 @@ public class ControllerLoggingConfig {
     @EndpointOrder(value0 = 600, value1 = 1200)
     @GetMapping("/aop")
     public ResponseEntity<?> getLoggingAop() {
-        ResponseLoggingAop response = new ResponseLoggingAop();
-        response.setIsLoggingRequest(serviceLoggingConfig.isEnabledRequest());
-        response.setIsLoggingResponse(serviceLoggingConfig.isEnabledResponse());
-        response.setIsLoggingDatabase(serviceLoggingConfig.isEnabledDatabase());
+        LoggingAopResponse response = new LoggingAopResponse();
+        response.setIsLoggingRequest(loggingConfigService.isEnabledRequest());
+        response.setIsLoggingResponse(loggingConfigService.isEnabledResponse());
+        response.setIsLoggingDatabase(loggingConfigService.isEnabledDatabase());
 
         ReturnCode code = ReturnCode.OK;
         return buildResponseEntity(code, response);
@@ -99,22 +99,22 @@ public class ControllerLoggingConfig {
     @PostMapping("/level/{loggerName}")
     public ResponseEntity<?> setLoggingLevel(@PathVariable(name = "loggerName") String loggerName, @RequestParam(name = "level") String level) {
         if ("trace".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.TRACE);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.TRACE);
         }
         else if ("debug".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.DEBUG);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.DEBUG);
         }
         else if ("info".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.INFO);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.INFO);
          }
         else if ("warn".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.WARN);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.WARN);
         }
         else if ("error".equalsIgnoreCase(level)) {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.ERROR);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.ERROR);
         }
         else {
-            serviceLoggingConfig.setLoggingLevel(loggerName, LogLevel.INFO);
+            loggingConfigService.setLoggingLevel(loggerName, LogLevel.INFO);
         }
 
         return getLoggingLevel(loggerName);
@@ -123,9 +123,9 @@ public class ControllerLoggingConfig {
     @EndpointOrder(value0 = 600, value1 = 2200)
     @GetMapping("/level/{loggerName}")
     public ResponseEntity<?> getLoggingLevel(@PathVariable(name = "loggerName") String loggerName) {
-        ResponseLoggingLevel response = new ResponseLoggingLevel();
+        LoggingLevelDomain response = new LoggingLevelDomain();
         response.setLoggerName(loggerName);
-        response.setLevel(serviceLoggingConfig.getLoggingLevel(loggerName).toString());
+        response.setLevel(loggingConfigService.getLoggingLevel(loggerName).toString());
 
         ReturnCode code = ReturnCode.OK;
         return buildResponseEntity(code, response);
@@ -133,12 +133,12 @@ public class ControllerLoggingConfig {
 
     @EndpointOrder(value0 = 600, value1 = 3100)
     @PostMapping("/levels")
-    public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<RequestLoggingLevel> levels) {
+    public ResponseEntity<?> setAllLoggingLevels(@RequestBody List<LoggingLevelDomain> levels) {
         if (levels.size() == 0) {
             throw new BusinessException(ReturnCode.EMPTY_ARRAY, "Input array is empty");
         }
-        for (RequestLoggingLevel item : levels) {
-            serviceLoggingConfig.setLoggingLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));
+        for (LoggingLevelDomain item : levels) {
+            loggingConfigService.setLoggingLevel(item.getLoggerName(), LogLevel.valueOf(item.getLevel()));
         }
 
         return getAllLoggingLevels();
@@ -147,11 +147,11 @@ public class ControllerLoggingConfig {
     @EndpointOrder(value0 = 600, value1 = 3200)
     @GetMapping("/levels")
     public ResponseEntity<?> getAllLoggingLevels() {
-        List<ResponseLoggingLevel> response = new ArrayList<>();
+        List<LoggingLevelDomain> response = new ArrayList<>();
         for (String loggerName : loggerNames) {
-            ResponseLoggingLevel item = new ResponseLoggingLevel();
+            LoggingLevelDomain item = new LoggingLevelDomain();
             item.setLoggerName(loggerName);
-            item.setLevel(serviceLoggingConfig.getLoggingLevel(loggerName).toString());
+            item.setLevel(loggingConfigService.getLoggingLevel(loggerName).toString());
             response.add(item);
         }
 

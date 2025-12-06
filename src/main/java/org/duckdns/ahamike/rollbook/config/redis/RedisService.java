@@ -16,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ServiceRedis {
+public class RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final String KEY_PREFIX;
     private final long expireSeconds;
     private final String KEY_DELIMITER;
 
-    public ServiceRedis(RedisTemplate<String, Object> redisTemplate,
+    public RedisService(RedisTemplate<String, Object> redisTemplate,
             @Value("${server.servlet.context-path}") String contextPath,
             @Value("${auth.jwt.expiration-access}") long expireMilliSeconds,
             @Value("${spring.data.redis.key_delimiter}") String key_delimiter) {

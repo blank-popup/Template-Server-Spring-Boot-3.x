@@ -1,4 +1,4 @@
-package org.duckdns.ahamike.rollbook.config.constant;
+package org.duckdns.ahamike.rollbook.config.response;
 
 import org.springframework.http.HttpStatus;
 

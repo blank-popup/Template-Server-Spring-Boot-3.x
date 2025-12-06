@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseLoggingLevel {
+public class LoggingLevelDomain {
     private String loggerName;
     private String level;
 }

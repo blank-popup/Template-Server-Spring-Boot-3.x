@@ -2,7 +2,7 @@ package org.duckdns.ahamike.rollbook.config.logging.setting;
 
 import java.time.LocalDateTime;
 
-import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.LoggingConfigService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LogParameter {
-    private ServiceApiHistory apiHistoryService;
-    private ServiceLoggingConfig loggingConfigService;
+    private ApiHistoryService apiHistoryService;
+    private LoggingConfigService loggingConfigService;
     private ObjectMapper mapper;
-    private String uriSignUp;
-    private String uriSignIn;
+    private String signUpUri;
+    private String signInUri;
     private int maxRequestBodySize;
     private int maxResponseBodySize;
 
@@ -41,12 +41,12 @@ public class LogParameter {
     private Long duration;
     private String responseBody;
 
-    public LogParameter(ServiceApiHistory apiHistoryService, ServiceLoggingConfig loggingConfigService, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize, Object requestObjectBody, Object responseObjectBody) {
+    public LogParameter(ApiHistoryService apiHistoryService, LoggingConfigService loggingConfigService, ObjectMapper mapper, String signUpUri, String signInUri, int maxRequestBodySize, int maxResponseBodySize, Object requestObjectBody, Object responseObjectBody) {
         this.apiHistoryService = apiHistoryService;
         this.loggingConfigService = loggingConfigService;
         this.mapper = mapper;
-        this.uriSignUp = uriSignUp;
-        this.uriSignIn = uriSignIn;
+        this.signUpUri = signUpUri;
+        this.signInUri = signInUri;
         this.maxRequestBodySize = maxRequestBodySize;
         this.maxResponseBodySize = maxResponseBodySize;
 
@@ -54,11 +54,11 @@ public class LogParameter {
         this.responseObjectBody = responseObjectBody;
     }
 
-    public LogParameter(ServiceApiHistory apiHistoryService, ServiceLoggingConfig loggingConfigService, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize, Object requestObjectBody) {
-        this(apiHistoryService, loggingConfigService, mapper, uriSignUp, uriSignIn, maxRequestBodySize, maxResponseBodySize, requestObjectBody, null);
+    public LogParameter(ApiHistoryService apiHistoryService, LoggingConfigService loggingConfigService, ObjectMapper mapper, String signUpUri, String signInUri, int maxRequestBodySize, int maxResponseBodySize, Object requestObjectBody) {
+        this(apiHistoryService, loggingConfigService, mapper, signUpUri, signInUri, maxRequestBodySize, maxResponseBodySize, requestObjectBody, null);
     }
 
-    public LogParameter(ServiceApiHistory apiHistoryService, ServiceLoggingConfig loggingConfigService, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize) {
-        this(apiHistoryService, loggingConfigService, mapper, uriSignUp, uriSignIn, maxRequestBodySize, maxResponseBodySize, null, null);
+    public LogParameter(ApiHistoryService apiHistoryService, LoggingConfigService loggingConfigService, ObjectMapper mapper, String signUpUri, String signInUri, int maxRequestBodySize, int maxResponseBodySize) {
+        this(apiHistoryService, loggingConfigService, mapper, signUpUri, signInUri, maxRequestBodySize, maxResponseBodySize, null, null);
     }
 }

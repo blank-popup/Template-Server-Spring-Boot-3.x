@@ -21,7 +21,6 @@ public class RequestTimeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         log.debug("$$$ Enter RequestTimeFilter.doFilter");
-        log.debug("$$$$$ requestTimeName: {}", requestTimeName);
 
         // ContentCachingRequestWrapper requestWrapper = request instanceof ContentCachingRequestWrapper wrapper ? wrapper : new ContentCachingRequestWrapper((HttpServletRequest) request);
         // ContentCachingResponseWrapper responseWrapper = response instanceof ContentCachingResponseWrapper wrapper ? wrapper : new ContentCachingResponseWrapper((HttpServletResponse) response);

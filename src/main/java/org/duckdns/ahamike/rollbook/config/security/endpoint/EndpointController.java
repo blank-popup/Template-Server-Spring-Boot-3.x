@@ -2,8 +2,8 @@ package org.duckdns.ahamike.rollbook.config.security.endpoint;
 
 import java.util.Map;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

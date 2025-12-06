@@ -2,8 +2,8 @@ package org.duckdns.ahamike.rollbook.process.project.attendance;
 
 import java.time.LocalDate;
 
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

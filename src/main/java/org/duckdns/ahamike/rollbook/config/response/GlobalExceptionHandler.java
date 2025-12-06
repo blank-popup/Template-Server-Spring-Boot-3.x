@@ -1,16 +1,14 @@
-package org.duckdns.ahamike.rollbook.config.exception;
+package org.duckdns.ahamike.rollbook.config.response;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.context.SpringContext;
-import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.LoggingConfigService;
 import org.duckdns.ahamike.rollbook.config.logging.setting.RequestParamInfo;
 import org.duckdns.ahamike.rollbook.config.logging.setting.LogParameter;
 import org.duckdns.ahamike.rollbook.config.logging.setting.LogUtil;
-import org.duckdns.ahamike.rollbook.config.logging.setting.ServiceApiHistory;
-import org.duckdns.ahamike.rollbook.process.GlobalException;
+import org.duckdns.ahamike.rollbook.config.logging.setting.ApiHistoryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,16 +41,17 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler implements RequestBodyAdvice{
+
     private static final ThreadLocal<Object> HOLDER_BODY = new ThreadLocal<>();
 
-    private final ServiceApiHistory serviceApiHistory;
+    private final ApiHistoryService apiHistoryService;
     private final ObjectMapper mapper;
-    private final ServiceLoggingConfig serviceLoggingConfig;
+    private final LoggingConfigService loggingConfigService;
 
     @Value("${auth.permitAll.signUp}")
-    private String uriSignUp;
+    private String signUpUri;
     @Value("${auth.permitAll.signIn}")
-    private String uriSignIn;
+    private String signInUri;
     @Value("${logging.limit.maxRequestBodySize}")
     private int maxRequestBodySize;
     @Value("${logging.limit.maxResponseBodySize}")
@@ -224,8 +223,8 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
         RequestParamInfo requestParamInfo = (RequestParamInfo) infoObject;
 
         LogParameter logParameter = LogUtil.buildLogParameter(
-            serviceApiHistory, serviceLoggingConfig, mapper,
-            uriSignUp, uriSignIn,
+            apiHistoryService, loggingConfigService, mapper,
+            signUpUri, signInUri,
             maxRequestBodySize, maxResponseBodySize
         );
         Object requestObjectBody = HOLDER_BODY.get();
@@ -235,8 +234,8 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
         Integer httpStatusValue = response.getStatusCode().value();
         logParameter = LogUtil.setLogPostParameter(logParameter, request, response, httpStatusValue);
 
-        if (serviceLoggingConfig.isEnabledDatabase() == true) {
-            serviceApiHistory.record(
+        if (loggingConfigService.isEnabledDatabase() == true) {
+            apiHistoryService.record(
                 logParameter.getUsername(),
                 logParameter.getMethod(),
                 logParameter.getUri(),
@@ -253,7 +252,7 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
                 logParameter.getResponseBody()
             );
         }
-        if (serviceLoggingConfig.isEnabledRequest() == true) {
+        if (loggingConfigService.isEnabledRequest() == true) {
             log.info("\n[Exception] username: {}"
                     + "\n[Exception] URI: [{}] {}"
                     + "\n[Exception] PathVariable: {}"
@@ -275,7 +274,7 @@ public class GlobalExceptionHandler implements RequestBodyAdvice{
                 logParameter.getUserAgent()
             );
         }
-        if (serviceLoggingConfig.isEnabledException() == true) {
+        if (loggingConfigService.isEnabledException() == true) {
             log.info("\n[Exception] HttpStatusValue: {}"
                     + "\n[Exception] Duration: {}"
                     + "\n[Exception] ResponseBody: {}",

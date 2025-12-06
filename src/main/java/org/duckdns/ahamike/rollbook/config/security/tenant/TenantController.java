@@ -1,7 +1,7 @@
 package org.duckdns.ahamike.rollbook.config.security.tenant;
 
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

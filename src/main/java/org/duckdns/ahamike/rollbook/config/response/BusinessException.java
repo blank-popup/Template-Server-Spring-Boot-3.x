@@ -1,8 +1,7 @@
-package org.duckdns.ahamike.rollbook.config.exception;
-
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
+package org.duckdns.ahamike.rollbook.config.response;
 
 public class BusinessException extends RuntimeException {
+
     private final ReturnCode code;
 
     public BusinessException(ReturnCode code) {

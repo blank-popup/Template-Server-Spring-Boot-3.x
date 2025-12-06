@@ -2,10 +2,10 @@ package org.duckdns.ahamike.rollbook.config.security.tenant;
 
 import java.util.List;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.security.tenant.setting.TenantContext;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.duckdns.ahamike.rollbook.table.TenantEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package org.duckdns.ahamike.rollbook.config.security;
 
-import org.duckdns.ahamike.rollbook.config.redis.ServiceRedis;
+import org.duckdns.ahamike.rollbook.config.redis.RedisService;
 import org.duckdns.ahamike.rollbook.table.UserEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class UserDetailsServiceCustom implements UserDetailsService {
-    private final ServiceRedis serviceRedis;
+    private final RedisService redisService;
     private final ObjectMapper mapper;
 
     @Override
     public UserDetailsCustom loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("username: {}", username);
-        Object userObject = serviceRedis.getOValue(username);
+        Object userObject = redisService.getOValue(username);
         UserEntity user = mapper.convertValue(userObject, UserEntity.class);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password");

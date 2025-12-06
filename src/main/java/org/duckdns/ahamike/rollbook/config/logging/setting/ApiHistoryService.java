@@ -12,14 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class ServiceApiHistory {
+public class ApiHistoryService {
 
-    private final RepositoryApiHistory repositoryApiHistory;
+    private final ApiHistoryRepository apiHistoryRepository;
 
     @Async
     public void record(String username, String method, String uri, String pathVariable, String requestParam, String requestPartFile, String requestPartParam, String ip, String userAgent, Integer httpStatusValue, LocalDateTime createdAt, Long duration, String requestBody, String responseBody) {
         ApiHistoryEntity history = new ApiHistoryEntity(username, method, uri, pathVariable, requestParam, requestPartFile, requestPartParam, ip, userAgent, httpStatusValue, createdAt, duration, requestBody, responseBody);
-        repositoryApiHistory.save(history);
+        apiHistoryRepository.save(history);
     }
 
     @Async

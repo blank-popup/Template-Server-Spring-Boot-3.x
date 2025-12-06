@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.duckdns.ahamike.rollbook.config.context.SpringContext;
-import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.LoggingConfigService;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.duckdns.ahamike.rollbook.util.json.JsonUtil;
 import org.duckdns.ahamike.rollbook.util.str.Str;
@@ -28,10 +28,10 @@ public class LogUtil {
 
     private static final String requestTimeName = SpringContext.getRequestTimeName();
 
-    public static LogParameter buildLogParameter(ServiceApiHistory serviceApiHistory, ServiceLoggingConfig serviceLoggingConfig, ObjectMapper mapper, String uriSignUp, String uriSignIn, int maxRequestBodySize, int maxResponseBodySize) { 
+    public static LogParameter buildLogParameter(ApiHistoryService apiHistoryService, LoggingConfigService loggingConfigService, ObjectMapper mapper, String signUpUri, String signInUri, int maxRequestBodySize, int maxResponseBodySize) { 
         LogParameter logParameter = new LogParameter(
-            serviceApiHistory, serviceLoggingConfig, mapper,
-            uriSignUp, uriSignIn,
+            apiHistoryService, loggingConfigService, mapper,
+            signUpUri, signInUri,
             maxRequestBodySize, maxResponseBodySize
         );
 
@@ -89,7 +89,7 @@ public class LogUtil {
         if (auth != null && auth.isAuthenticated() == true && "anonymousUser".equals(auth.getPrincipal()) == false) {
             return auth.getName();
         }
-        else if (logParameter.getMethod() != null && logParameter.getMethod().equals(HttpMethod.POST.name()) == true && logParameter.getUri() != null && (logParameter.getUri().equalsIgnoreCase(logParameter.getUriSignUp()) || logParameter.getUri().equalsIgnoreCase(logParameter.getUriSignIn())) && logParameter.getMapper() != null && logParameter.getRequestObjectBody() != null) {
+        else if (logParameter.getMethod() != null && logParameter.getMethod().equals(HttpMethod.POST.name()) == true && logParameter.getUri() != null && (logParameter.getUri().equalsIgnoreCase(logParameter.getSignUpUri()) || logParameter.getUri().equalsIgnoreCase(logParameter.getSignInUri())) && logParameter.getMapper() != null && logParameter.getRequestObjectBody() != null) {
             JsonNode body = JsonUtil.object2JsonNode(logParameter.getMapper(), logParameter.getRequestObjectBody());
             if (body != null && body.has("username")) {
                 return body.get("username").asText();

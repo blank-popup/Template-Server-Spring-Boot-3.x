@@ -1,12 +1,12 @@
 package org.duckdns.ahamike.rollbook.config.security;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointRepository;
 import org.duckdns.ahamike.rollbook.config.security.group.GroupRepository;
 import org.duckdns.ahamike.rollbook.config.security.role.RoleRepository;
 import org.duckdns.ahamike.rollbook.config.security.user.UserRepository;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.duckdns.ahamike.rollbook.table.EndpointEntity;
 import org.duckdns.ahamike.rollbook.table.GroupEntity;
 import org.duckdns.ahamike.rollbook.table.RoleEntity;

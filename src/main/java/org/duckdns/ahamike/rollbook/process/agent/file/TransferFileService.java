@@ -9,9 +9,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.apache.tika.Tika;
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.table.TransferFileEntity;
 import org.duckdns.ahamike.rollbook.util.mime.MimeTypeInfo;
 import org.duckdns.ahamike.rollbook.util.mime.MimeTypeParser;

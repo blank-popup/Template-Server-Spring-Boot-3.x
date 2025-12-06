@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class ServiceLoggingConfig {
+public class LoggingConfigService {
 
     private final LoggingSystem loggingSystem;
 

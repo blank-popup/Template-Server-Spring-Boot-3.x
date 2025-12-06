@@ -1,15 +1,18 @@
 package org.duckdns.ahamike.rollbook.process.agent.menu;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.duckdns.ahamike.rollbook.config.security.role.RoleRepository;
 import org.duckdns.ahamike.rollbook.table.MenuEntity;
 import org.duckdns.ahamike.rollbook.table.RoleEntity;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
@@ -62,10 +65,12 @@ public abstract class MenuMapper {
                 .collect(Collectors.toSet());
     }
 
+    public abstract List<MenuDomain> toDomainList(List<MenuEntity> entityList);
+
+    public abstract List<MenuEntity> toEntityList(List<MenuDomain> domainList);
+
     @Mapping(target = "parent", expression = "java(toParent(domain.getParentId()))")
     @Mapping(target = "roles", expression = "java(toEntityRoles(domain.getRoles()))")
-    public abstract void updateEntityFromDomain(
-            MenuDomain domain,
-            @MappingTarget MenuEntity entity
-    );
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void updateEntityFromDomain(MenuDomain domain, @MappingTarget MenuEntity entity);
 }

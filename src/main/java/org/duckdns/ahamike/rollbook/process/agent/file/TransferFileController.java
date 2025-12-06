@@ -1,7 +1,7 @@
 package org.duckdns.ahamike.rollbook.process.agent.file;
 
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
 import org.duckdns.ahamike.rollbook.config.security.endpoint.EndpointOrder;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

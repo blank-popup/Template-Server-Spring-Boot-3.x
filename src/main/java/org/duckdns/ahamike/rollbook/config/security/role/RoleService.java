@@ -1,8 +1,8 @@
 package org.duckdns.ahamike.rollbook.config.security.role;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.table.RoleEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -4,7 +4,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Set;
 
-import org.duckdns.ahamike.rollbook.config.redis.ServiceRedis;
+import org.duckdns.ahamike.rollbook.config.redis.RedisService;
 import org.duckdns.ahamike.rollbook.util.client.ClientInfo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class JwtProvider implements InitializingBean {
     @Value("${auth.jwt.expiration-access}")
     private long tokenValidMillisecond;
     private final UserDetailsService userDetailsService;
-    private final ServiceRedis redisService;
+    private final RedisService redisService;
 
     @Value("${spring.data.redis.group0_user}")
     private String group0_user;

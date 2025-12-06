@@ -5,7 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.duckdns.ahamike.rollbook.config.context.SpringContext;
-import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.LoggingConfigService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LogAop {
 
-    private final ServiceApiHistory serviceApiHistory;
+    private final ApiHistoryService apiHistoryService;
     private final ObjectMapper mapper;
-    private final ServiceLoggingConfig serviceLoggingConfig;
+    private final LoggingConfigService loggingConfigService;
 
     @Value("${auth.permitAll.signUp}")
-    private String uriSignUp;
+    private String signUpUri;
     @Value("${auth.permitAll.signIn}")
-    private String uriSignIn;
+    private String signInUri;
     @Value("${logging.limit.maxRequestBodySize}")
     private int maxRequestBodySize;
     @Value("${logging.limit.maxResponseBodySize}")
@@ -55,8 +55,8 @@ public class LogAop {
         RequestParamInfo requestParamInfo = (RequestParamInfo) infoObject;
 
         LogParameter logParameter = LogUtil.buildLogParameter(
-            serviceApiHistory, serviceLoggingConfig, mapper,
-            uriSignUp, uriSignIn,
+            apiHistoryService, loggingConfigService, mapper,
+            signUpUri, signInUri,
             maxRequestBodySize, maxResponseBodySize
         );
         Object requestObjectBody = LogUtil.getRequestObjectBody(joinPoint);
@@ -64,7 +64,7 @@ public class LogAop {
 
         logParameter = LogUtil.setLogPreParameter(logParameter, request, requestParamInfo);
 
-        if (serviceLoggingConfig.isEnabledRequest() == true) {
+        if (loggingConfigService.isEnabledRequest() == true) {
             log.info("\n[Request] username: {}"
                     + "\n[Request] URI: [{}] {}"
                     + "\n[Request] PathVariable: {}"
@@ -92,8 +92,8 @@ public class LogAop {
 
             logParameter = LogUtil.setLogPostParameter(logParameter, request, result, HttpServletResponse.SC_OK);
 
-            if (serviceLoggingConfig.isEnabledDatabase() == true) {
-                serviceApiHistory.record(
+            if (loggingConfigService.isEnabledDatabase() == true) {
+                apiHistoryService.record(
                     logParameter.getUsername(),
                     logParameter.getMethod(),
                     logParameter.getUri(),
@@ -110,7 +110,7 @@ public class LogAop {
                     logParameter.getResponseBody()
                 );
             }
-            if (serviceLoggingConfig.isEnabledResponse() == true) {
+            if (loggingConfigService.isEnabledResponse() == true) {
                 log.info("\n[Response] HttpStatusValue: {}"
                         + "\n[Response] Duration: {}"
                         + "\n[Response] ResponseBody: {}",

@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RepositoryApiHistory extends JpaRepository<ApiHistoryEntity, Long> {
+public interface ApiHistoryRepository extends JpaRepository<ApiHistoryEntity, Long> {
+
 }

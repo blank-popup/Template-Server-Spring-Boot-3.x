@@ -3,7 +3,7 @@ package org.duckdns.ahamike.rollbook.config.runInitialization;
 import java.util.List;
 import java.util.Set;
 
-import org.duckdns.ahamike.rollbook.config.logging.ServiceLoggingConfig;
+import org.duckdns.ahamike.rollbook.config.logging.LoggingConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -32,7 +32,7 @@ public class RunInitialization implements ApplicationRunner {
     @Value("#{environment['variable.actuator.name']}")
     private String nameActuator;
 
-    private final ServiceLoggingConfig serviceLoggingConfig;
+    private final LoggingConfigService loggingConfigService;
     @Autowired
 
     @Override
@@ -82,13 +82,13 @@ public class RunInitialization implements ApplicationRunner {
     }
 
     private void setAndGetLoggingAop() {
-        serviceLoggingConfig.enableRequest();
-        serviceLoggingConfig.enableResponse();
-        serviceLoggingConfig.enableException();
-        serviceLoggingConfig.enableDatabase();
-        log.info("Logging Request: {}", serviceLoggingConfig.isEnabledRequest());
-        log.info("Logging Response: {}", serviceLoggingConfig.isEnabledResponse());
-        log.info("Logging Exception: {}", serviceLoggingConfig.isEnabledException());
-        log.info("Logging Database: {}", serviceLoggingConfig.isEnabledDatabase());
+        loggingConfigService.enableRequest();
+        loggingConfigService.enableResponse();
+        loggingConfigService.enableException();
+        loggingConfigService.enableDatabase();
+        log.info("Logging Request: {}", loggingConfigService.isEnabledRequest());
+        log.info("Logging Response: {}", loggingConfigService.isEnabledResponse());
+        log.info("Logging Exception: {}", loggingConfigService.isEnabledException());
+        log.info("Logging Database: {}", loggingConfigService.isEnabledDatabase());
     }
 }

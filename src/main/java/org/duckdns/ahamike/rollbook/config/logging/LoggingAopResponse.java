@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseLoggingAop {
+public class LoggingAopResponse {
     private Boolean isLoggingRequest;
     private Boolean isLoggingResponse;
     private Boolean isLoggingDatabase;

@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.duckdns.ahamike.rollbook.config.constant.ReturnCode;
-import org.duckdns.ahamike.rollbook.config.exception.BusinessException;
-import org.duckdns.ahamike.rollbook.config.redis.ServiceRedis;
+import org.duckdns.ahamike.rollbook.config.redis.RedisService;
+import org.duckdns.ahamike.rollbook.config.response.BusinessException;
+import org.duckdns.ahamike.rollbook.config.response.GlobalResponse;
+import org.duckdns.ahamike.rollbook.config.response.ReturnCode;
 import org.duckdns.ahamike.rollbook.config.security.JwtProvider;
 import org.duckdns.ahamike.rollbook.config.security.UserDetailsCustom;
 import org.duckdns.ahamike.rollbook.config.security.UserDetailsServiceCustom;
 import org.duckdns.ahamike.rollbook.config.security.role.RoleRepository;
-import org.duckdns.ahamike.rollbook.process.GlobalResponse;
 import org.duckdns.ahamike.rollbook.process.project.tag.TagRepository;
 import org.duckdns.ahamike.rollbook.table.RoleEntity;
 import org.duckdns.ahamike.rollbook.table.TagEntity;
@@ -44,7 +44,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsServiceCustom userDetailsService;
     private final JwtProvider jwtProvider;
-    private final ServiceRedis redisService;
+    private final RedisService redisService;
 
     @Value("${spring.data.redis.group0_user}")
     private String group0_user;
