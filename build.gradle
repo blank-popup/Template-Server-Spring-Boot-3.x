@@ -50,9 +50,14 @@ dependencies {
   runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'
   runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 
-  compileOnly 'org.projectlombok:lombok'
   runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+  compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
+
+  implementation 'org.mapstruct:mapstruct:1.6.3'
+  annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
@@ -64,6 +69,10 @@ dependencies {
   }
 
   implementation 'org.apache.tika:tika-parsers:1.28.5'
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorPath = configurations.annotationProcessor
 }
 
 ext {
