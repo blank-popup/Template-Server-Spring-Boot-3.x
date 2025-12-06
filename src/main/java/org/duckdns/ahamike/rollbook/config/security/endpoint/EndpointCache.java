@@ -224,11 +224,11 @@ public class EndpointCache {
         Set<RoleEntity> managerRoles = Set.of(roleManager, roleCommon);
         Set<RoleEntity> userRoles = Set.of(roleUser, roleCommon);
         Set<RoleEntity> guestRoles = Set.of(roleGuest);
-        createUserIfNotExists("admin", "admin", "admin", adminRoles);
-        createUserIfNotExists("manager", "manager", "manager", managerRoles);
-        createUserIfNotExists("user00", "user00", "user00", userRoles);
-        createUserIfNotExists("user01", "user01", "user01", userRoles);
-        createUserIfNotExists("guest", "guest", "guest", guestRoles);
+        createUserIfNotExists("admin", "$2a$10$V64Lebxd3FX2D9tE0EVCh.5lZDwCrwJpIlNiv0pMdkZdCZug/pgtq", "admin", adminRoles);
+        createUserIfNotExists("manager", "$2a$10$JeqkXaNM9XW.DCYjTPifJ.tp5nb6B9Owx2EZAhiqShWoqvQAqOOhu", "manager", managerRoles);
+        createUserIfNotExists("user00", "$2a$10$sHMKXwqnD3wz/MGlS9eBPuWlQGmW8AKAWSuAZddsnOvi/WRH1sF4C", "user00", userRoles);
+        createUserIfNotExists("user01", "$2a$10$rbvshCSjJbNtUpAV9I98LulCbEg2Vs2ARgMZWqHF7iw70mnVYvg7G", "user01", userRoles);
+        createUserIfNotExists("guest", "$2a$10$inDwapcFo0b.kU/mKM5E2ulsYCgjA9VPEdRaqBN2teShV4RRTuLlm", "guest", guestRoles);
     }
 
     private RoleEntity createRoleIfNotExists(String roleName) {
